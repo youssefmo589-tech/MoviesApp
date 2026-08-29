@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/CustomeWidgets/ButtonWidget.dart';
 
+import '../../CustomeWidgets/BottomsheetContainer.dart';
 import '../../core/AppThemeManager/AppColors.dart';
 
 class Profile extends StatefulWidget {
@@ -10,7 +11,9 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+
   Widget build(BuildContext context) {
+
     final theme = Theme.of(context).textTheme;
 
     return Scaffold(
@@ -36,9 +39,86 @@ class _ProfileState extends State<Profile> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: 37),
-            CircleAvatar(
-              radius: 70,
-              backgroundImage: AssetImage("assets/images/gamer (1) (7).png"),
+            GestureDetector(
+              onTap: () {
+                showModalBottomSheet(
+                    backgroundColor: Colors.transparent,
+                    isScrollControlled: true,
+                    isDismissible: true,
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.grey,
+                            borderRadius: BorderRadius.circular(16),
+
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceAround,
+                                children: [
+                                  Expanded(child: BottomsheetContainer(
+                                      image: Image.asset(
+                                          "assets/images/gamer (1).png"))),
+                                  Expanded(child: BottomsheetContainer(
+                                      image: Image.asset(
+                                          "assets/images/gamer (1) (1).png"))),
+                                  Expanded(child: BottomsheetContainer(
+                                      image: Image.asset(
+                                          "assets/images/gamer (1) (2).png"))),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceAround,
+
+                                children: [
+                                  Expanded(child: BottomsheetContainer(
+                                      image: Image.asset(
+                                          "assets/images/gamer (1) (3).png"))),
+                                  Expanded(child: BottomsheetContainer(
+                                    image: Image.asset(
+                                        "assets/images/gamer (1) (4).png"),)),
+                                  Expanded(child: BottomsheetContainer(
+                                      image: Image.asset(
+                                          "assets/images/gamer (1) (5).png"))),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceAround,
+
+                                children: [
+                                  Expanded(child: BottomsheetContainer(
+                                      image: Image.asset(
+                                          "assets/images/gamer (1) (6).png"))),
+                                  Expanded(child: BottomsheetContainer(
+                                      image: Image.asset(
+                                          "assets/images/gamer (1) (7).png"))),
+                                  Expanded(child: BottomsheetContainer(
+                                      image: Image.asset(
+                                          "assets/images/gamer (1) (8).png"))),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    }
+
+                );
+              },
+
+              child: CircleAvatar(
+                radius: 70,
+                backgroundImage: AssetImage("assets/images/gamer (1) (7).png"),
+              ),
             ),
 
             SizedBox(height: 35),
@@ -141,4 +221,6 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
+
+
 }

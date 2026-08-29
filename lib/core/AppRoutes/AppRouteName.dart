@@ -10,4 +10,6 @@ abstract class AppRouteName {
   static const String Register = '/Register';
 
   static const String ForgetPassword = '/ForgetPassword';
+
+  static const String Profile = '/Profile';
 }

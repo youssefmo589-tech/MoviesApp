@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movieapp/CustomeWidgets/ButtonWidget.dart';
 
 import '../../../../core/AppThemeManager/AppColors.dart';
 import '../../../../core/gen/assets.gen.dart';
@@ -60,26 +60,9 @@ class Forgetpassword extends StatelessWidget {
                 ),
               ),
 
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  height: 55.72218704223633,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: AppColors.yellow,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Verify Email",
-                      style: theme.titleSmall?.copyWith(
-                        color: AppColors.black,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              ButtonWidget(title: "Verify Email",
+                  buttoncolor: AppColors.yellow,
+                  titlecolor: AppColors.black),
             ],
           ),
         ),

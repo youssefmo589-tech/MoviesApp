@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRouteName.ForgetPassword,
+      initialRoute: AppRouteName.Profile,
       onGenerateRoute: AppConfig.onGenerateRoute,
       theme: AppThemeManager.theme,
     );

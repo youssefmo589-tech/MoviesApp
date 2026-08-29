@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:movieapp/Models/Authentication/presentation/ForgetPassword/forgetPassword.dart';
 import 'package:movieapp/Models/Home/Home.dart';
 import 'package:movieapp/Models/splashScreen/SplashScreen.dart';
 
+import '../../Models/Authentication/presentation/ForgetPasswordUI/forgetPassword.dart';
+import '../../Models/ProfilePage/Profile.dart';
 import 'AppRouteName.dart';
 
 abstract class AppConfig {
@@ -16,6 +17,9 @@ abstract class AppConfig {
 
       case AppRouteName.ForgetPassword:
         return MaterialPageRoute(builder: (context) => Forgetpassword());
+
+      case AppRouteName.Profile:
+        return MaterialPageRoute(builder: (context) => Profile());
     }
   }
 }

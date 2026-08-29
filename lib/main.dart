@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/core/AppRoutes/AppRouteConfig.dart';
-
 import 'core/AppRoutes/AppRouteName.dart';
 
 void main() {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movieapp/Models/Home/Home.dart';
-import 'package:movieapp/Models/splashScreen/SplashScreen.dart';
-
+import '../../Models/Home/Home.dart';
+import '../../Models/splashScreen/SplashScreen.dart';
 import 'AppRouteName.dart';
 
 abstract class AppConfig {

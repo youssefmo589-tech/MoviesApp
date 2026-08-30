@@ -8,20 +8,18 @@ class BottomsheetContainer extends StatelessWidget {
 
   bool isselected;
 
-  VoidCallback? onTap;
+  int index;
 
   BottomsheetContainer({
     super.key,
+    this.index = -1,
     required this.image,
     this.isselected = false,
-    this.onTap,
   });
 
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: GestureDetector(
-        onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
             color: isselected == false
@@ -34,7 +32,6 @@ class BottomsheetContainer extends StatelessWidget {
             child: Padding(padding: const EdgeInsets.all(8.0), child: image),
           ),
         ),
-      ),
     );
   }
 }

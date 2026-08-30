@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:movieapp/CustomeWidgets/ButtonWidget.dart';
+import 'package:movieapp/CustomeWidgets/button_widget.dart';
 
-import '../../../../core/AppThemeManager/AppColors.dart';
+import '../../../../core/AppThemeManager/app_colors.dart';
 import '../../../../core/gen/assets.gen.dart';
 
 class Forgetpassword extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../core/AppThemeManager/AppColors.dart';
+import '../core/AppThemeManager/app_colors.dart';
 import '../core/gen/assets.gen.dart';
 
 class LanguageSelectorWidget extends StatefulWidget {

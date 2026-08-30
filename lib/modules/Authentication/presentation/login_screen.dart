@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:movieapp/CustomeWidgets/language_selector_widget.dart';
 import 'package:movieapp/CustomeWidgets/text_form_field_widget.dart';
 
-import '../../../CustomeWidgets/ButtonWidget.dart';
-import '../../../core/AppRoutes/AppRouteName.dart';
-import '../../../core/AppThemeManager/AppColors.dart';
+import '../../../CustomeWidgets/button_widget.dart';
+import '../../../core/AppRoutes/app_route_name.dart';
+import '../../../core/AppThemeManager/app_colors.dart';
 import '../../../core/gen/assets.gen.dart';
 
 class LoginScreen extends StatelessWidget {

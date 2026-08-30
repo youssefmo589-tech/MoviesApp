@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:movieapp/core/AppRoutes/AppRouteConfig.dart';
+import 'package:movieapp/core/AppRoutes/app_route_config.dart';
 
-import 'core/AppRoutes/AppRouteName.dart';
-import 'core/AppThemeManager/AppThemeManager.dart';
+import 'core/AppRoutes/app_route_name.dart';
+import 'core/AppThemeManager/app_theme_manager.dart';
 
 void main() {
   runApp(MyApp());

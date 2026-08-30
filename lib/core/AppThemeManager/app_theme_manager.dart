@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'AppColors.dart';
+import 'app_colors.dart';
 
 abstract class AppThemeManager {
   static final ThemeData theme = ThemeData(

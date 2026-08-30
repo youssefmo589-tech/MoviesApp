@@ -11,10 +11,11 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRouteName.Profile,
+      initialRoute: AppRouteName.login,
       onGenerateRoute: AppConfig.onGenerateRoute,
       theme: AppThemeManager.theme,
     );

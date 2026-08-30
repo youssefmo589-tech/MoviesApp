@@ -1,15 +1,15 @@
 abstract class AppRouteName {
-  static const String Initial = "/";
+  static const String initial = "/";
 
-  static const String Login = "/login";
+  static const String login = "/login";
 
-  static const String Home = "/Home";
+  static const String home = "/Home";
 
-  static const String OnBoarding = '/OnBoarding';
+  static const String onBoarding = '/OnBoarding';
 
-  static const String Register = '/Register';
+  static const String register = '/Register';
 
-  static const String ForgetPassword = '/ForgetPassword';
+  static const String forgetPassword = '/ForgetPassword';
 
-  static const String Profile = '/Profile';
+  static const String profile = '/Profile';
 }

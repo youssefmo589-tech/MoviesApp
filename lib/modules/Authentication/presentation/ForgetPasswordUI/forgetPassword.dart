@@ -7,6 +7,7 @@ import '../../../../core/gen/assets.gen.dart';
 class Forgetpassword extends StatelessWidget {
   const Forgetpassword({super.key});
 
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
 

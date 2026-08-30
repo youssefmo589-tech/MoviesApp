@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movieapp/core/AppRoutes/AppRouteConfig.dart';
+import 'core/AppRoutes/AppRouteConfig.dart';
 import 'core/AppRoutes/AppRouteName.dart';
 
 void main() {
@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       initialRoute: AppRouteName.Initial,
       onGenerateRoute: AppConfig.onGenerateRoute,
     );

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../modules/Authentication/presentation/ForgetPasswordUI/forgetPassword.dart';
-import '../../modules/Authentication/presentation/login_screen.dart';
-import '../../modules/Authentication/presentation/register_screen.dart';
 import '../../modules/Home/home_screen.dart';
-import '../../modules/ProfilePage/profile_screen.dart';
-import '../../modules/splashScreen/splash_screen.dart';
+import '../../modules/auth/presentation/forget_password.dart';
+import '../../modules/auth/presentation/login_screen.dart';
+import '../../modules/auth/presentation/register_screen.dart';
+import '../../modules/onboarding/on_boarding_screen.dart';
+import '../../modules/profile/profile_screen.dart';
+import '../../modules/splash/splash_screen.dart';
 import 'app_route_name.dart';
 
 abstract class AppConfig {
@@ -15,6 +16,9 @@ abstract class AppConfig {
 
       case AppRouteName.home:
         return MaterialPageRoute(builder: (context) => HomeScreen());
+
+      case AppRouteName.onBoarding:
+        return MaterialPageRoute(builder: (context) => OnBoardingScreen());
 
       case AppRouteName.forgetPassword:
         return MaterialPageRoute(builder: (context) => Forgetpassword());

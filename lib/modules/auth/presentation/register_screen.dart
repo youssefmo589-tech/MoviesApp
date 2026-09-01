@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:movieapp/CustomeWidgets/arrow_back_widget.dart';
-import 'package:movieapp/CustomeWidgets/text_form_field_widget.dart';
 
-import '../../../CustomeWidgets/button_widget.dart';
-import '../../../CustomeWidgets/avatars_carousel_slider_widget.dart';
-import '../../../CustomeWidgets/language_selector_widget.dart';
-import '../../../core/AppRoutes/app_route_name.dart';
-import '../../../core/AppThemeManager/app_colors.dart';
+import '../../../core/app_routes/app_route_name.dart';
+import '../../../core/app_theme_manager/app_colors.dart';
 import '../../../core/gen/assets.gen.dart';
+import '../../../widgets/arrow_back_widget.dart';
+import '../../../widgets/avatars_carousel_slider_widget.dart';
+import '../../../widgets/button_widget.dart';
+import '../../../widgets/language_selector_widget.dart';
+import '../../../widgets/text_form_field_widget.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});

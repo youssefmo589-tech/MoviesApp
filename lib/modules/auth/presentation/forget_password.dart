@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:movieapp/CustomeWidgets/button_widget.dart';
 
-import '../../../../core/AppThemeManager/app_colors.dart';
-import '../../../../core/gen/assets.gen.dart';
+import '../../../core/app_routes/app_route_name.dart';
+import '../../../core/app_theme_manager/app_colors.dart';
+import '../../../core/gen/assets.gen.dart';
+import '../../../widgets/button_widget.dart';
 
 class Forgetpassword extends StatelessWidget {
   const Forgetpassword({super.key});
@@ -63,7 +64,11 @@ class Forgetpassword extends StatelessWidget {
 
               ButtonWidget(title: "Verify Email",
                   buttoncolor: AppColors.yellow,
-                  titlecolor: AppColors.black),
+                  titlecolor: AppColors.black,
+                  onTap: () {
+                    Navigator.pushNamed(context, AppRouteName.profile);
+                  }
+              ),
             ],
           ),
         ),

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:movieapp/core/AppRoutes/AppRouteName.dart';
+
+import '../../core/app_routes/app_route_name.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, AppRouteName.OnBoarding);
+      Navigator.pushReplacementNamed(context, AppRouteName.onBoarding);
     });
   }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../core/AppThemeManager/app_colors.dart';
+import '../core/app_theme_manager/app_colors.dart';
 
 class ArrowBackWidget extends StatelessWidget {
   const ArrowBackWidget({super.key});

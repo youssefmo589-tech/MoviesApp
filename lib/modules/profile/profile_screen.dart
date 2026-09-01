@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:movieapp/CustomeWidgets/button_widget.dart';
-
-import '../../core/AppThemeManager/app_colors.dart';
+import '../../core/app_routes/app_route_name.dart';
+import '../../core/app_theme_manager/app_colors.dart';
+import '../../widgets/button_widget.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
 
+  @override
   State<Profile> createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
 
@@ -115,11 +117,16 @@ class _ProfileState extends State<Profile> {
 
             Align(
               alignment: Alignment.centerLeft,
-              child: Text(
-                "Reset Password",
-                style: theme.titleSmall?.copyWith(
-                  fontSize: 20,
-                  color: AppColors.white,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, AppRouteName.forgetPassword);
+                },
+                child: Text(
+                  "Reset Password",
+                  style: theme.titleSmall?.copyWith(
+                    fontSize: 20,
+                    color: AppColors.white,
+                  ),
                 ),
               ),
             ),

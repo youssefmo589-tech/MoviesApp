@@ -18,105 +18,108 @@ class LoginScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 19.0),
-          child: Column(
-            children: [
-              Assets.images.logo.image(),
-              SizedBox(height: 69),
-              TextFormFieldWidget(
-                hintText: "Email",
-                prefixIcon: Assets.icons.emailIcon.svg(),
-              ),
-              SizedBox(height: 22),
-              TextFormFieldWidget(
-                hintText: "Password",
-                prefixIcon: Assets.icons.password.svg(),
-                isPassword: true,
-              ),
-              SizedBox(height: 18),
-              Row(
-                children: [
-                  Spacer(),
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.pushNamed(context, AppRouteName.forgetPassword);
-                    },
-                    child: Text(
-                      "Forget Password?",
-                      style: theme.textTheme.bodyMedium?.copyWith(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Assets.images.logo.image(),
+                SizedBox(height: 69),
+                TextFormFieldWidget(
+                  hintText: "Email",
+                  prefixIcon: Assets.icons.emailIcon.svg(),
+                ),
+                SizedBox(height: 22),
+                TextFormFieldWidget(
+                  hintText: "Password",
+                  prefixIcon: Assets.icons.password.svg(),
+                  isPassword: true,
+                ),
+                SizedBox(height: 18),
+                Row(
+                  children: [
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, AppRouteName.forgetPassword);
+                      },
+                      child: Text(
+                        "Forget Password?",
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: AppColors.yellow,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 34),
+                ButtonWidget(
+                  title: "Login",
+                  buttoncolor: AppColors.yellow,
+                  titlecolor: AppColors.black,
+                  onTap: () {
+                    Navigator.pushNamed(context, AppRouteName.home);
+                  },
+                ),
+                SizedBox(height: 22),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Don’t Have Account ?",
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, AppRouteName.register);
+                      },
+                      child: Text(
+                        " Create One",
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: AppColors.yellow,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 28),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        color: AppColors.yellow,
+                        indent: 65,
+                        endIndent: 10,
+                      ),
+                    ),
+                    Text(
+                      "OR",
+                      style: theme.textTheme.bodyLarge?.copyWith(
                         color: AppColors.yellow,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 34),
-              ButtonWidget(
-                title: "Login",
-                buttoncolor: AppColors.yellow,
-                titlecolor: AppColors.black,
-                onTap: () {
-                  Navigator.pushNamed(context, AppRouteName.home);
-                },
-              ),
-              SizedBox(height: 22),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Don’t Have Account ?",
-                    style: theme.textTheme.bodyMedium,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, AppRouteName.register);
-                    },
-                    child: Text(
-                      " Create One",
-                      style: theme.textTheme.bodyMedium?.copyWith(
+                    Expanded(
+                      child: Divider(
                         color: AppColors.yellow,
-                        fontWeight: FontWeight.w900,
+                        indent: 10,
+                        endIndent: 65,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 28),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Divider(
-                      color: AppColors.yellow,
-                      indent: 65,
-                      endIndent: 10,
-                    ),
-                  ),
-                  Text(
-                    "OR",
-                    style: theme.textTheme.bodyLarge?.copyWith(
-                      color: AppColors.yellow,
-                    ),
-                  ),
-                  Expanded(
-                    child: Divider(
-                      color: AppColors.yellow,
-                      indent: 10,
-                      endIndent: 65,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 28),
-              ButtonWidget(
-                title: 'Login With Google',
-                buttoncolor: AppColors.yellow,
-                titlecolor: AppColors.black,
-                icon: Assets.icons.google.svg(),
-              ),
-              SizedBox(height: 33),
-              LanguageSelectorWidget(),
+                  ],
+                ),
+                SizedBox(height: 28),
+                ButtonWidget(
+                  title: 'Login With Google',
+                  buttoncolor: AppColors.yellow,
+                  titlecolor: AppColors.black,
+                  icon: Assets.icons.google.svg(),
+                ),
+                SizedBox(height: 33),
+                LanguageSelectorWidget(),
 
-            ],
+              ],
+            ),
           ),
         ),
       ),

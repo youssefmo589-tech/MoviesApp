@@ -16,7 +16,7 @@ class ButtonWidget extends StatelessWidget {
     required this.buttoncolor,
     required this.titlecolor,
     this.onTap, this.icon,
-  }); //////required this.onTap
+  });
 
   @override
   Widget build(BuildContext context) {

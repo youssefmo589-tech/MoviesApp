@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../core/AppThemeManager/AppColors.dart';
+import '../core/app_theme_manager/app_colors.dart';
 
 class BottomsheetContainer extends StatelessWidget {
   final Image image;

@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../core/app_routes/app_route_name.dart';
@@ -15,7 +16,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, AppRouteName.onBoarding);
+      Navigator.pushNamedAndRemoveUntil(
+          context, AppRouteName.onBoarding, (route) => false);
     });
   }
 

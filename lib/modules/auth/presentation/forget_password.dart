@@ -30,46 +30,52 @@ class Forgetpassword extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            spacing: 24,
-            children: [
-              Assets.images.forgotPasswordBro1.image(),
+          child: SingleChildScrollView(
+            child: Column(
+              spacing: 24,
+              children: [
+                Assets.images.forgotPasswordBro1.image(),
 
-              SizedBox(
-                width: double.infinity,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 16,
-                    ),
-                    hintText: "Email",
-                    hintStyle: theme.titleSmall?.copyWith(
-                      color: AppColors.white,
-                      fontSize: 16,
-                    ),
-                    prefixIcon: Icon(
-                      Icons.email,
-                      color: AppColors.white,
-                      size: 31,
-                    ),
-                    filled: true,
-                    fillColor: AppColors.grey,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
+                SizedBox(
+                  width: double.infinity,
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide(color: AppColors.white),
+                      ),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 16,
+                      ),
+                      hintText: "Email",
+                      hintStyle: theme.titleSmall?.copyWith(
+                        color: AppColors.white,
+                        fontSize: 16,
+                      ),
+                      prefixIcon: Icon(
+                        Icons.email,
+                        color: AppColors.white,
+                        size: 31,
+                      ),
+                      filled: true,
+                      fillColor: AppColors.grey,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
                     ),
                   ),
                 ),
-              ),
 
-              ButtonWidget(title: "Verify Email",
-                  buttoncolor: AppColors.yellow,
-                  titlecolor: AppColors.black,
-                  onTap: () {
-                    Navigator.pushNamed(context, AppRouteName.profile);
-                  }
-              ),
-            ],
+                ButtonWidget(title: "Verify Email",
+                    buttoncolor: AppColors.yellow,
+                    titlecolor: AppColors.black,
+                    onTap: () {
+                      Navigator.pushNamed(context, AppRouteName.profile);
+                    }
+                ),
+              ],
+            ),
           ),
         ),
       ),

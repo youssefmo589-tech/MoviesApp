@@ -4,7 +4,7 @@ import '../../modules/auth/presentation/forget_password.dart';
 import '../../modules/auth/presentation/login_screen.dart';
 import '../../modules/auth/presentation/register_screen.dart';
 import '../../modules/onboarding/on_boarding_screen.dart';
-import '../../modules/profile/profile_screen.dart';
+import '../../modules/profile/presentation/profile_screen.dart';
 import '../../modules/splash/splash_screen.dart';
 import 'app_route_name.dart';
 

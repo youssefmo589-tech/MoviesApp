@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../core/app_routes/app_route_name.dart';
-import '../../core/app_theme_manager/app_colors.dart';
-import '../../widgets/avatar_bottom_sheet.dart';
-import '../../widgets/button_widget.dart';
+import '../../../core/app_routes/app_route_name.dart';
+import '../../../core/app_theme_manager/app_colors.dart';
+import '../../../widgets/avatar_bottom_sheet.dart';
+import '../../../widgets/button_widget.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});

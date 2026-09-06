@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:movieapp/core/FirebaseCloudService/FirestoreCloudService.dart';
+import 'package:movieapp/modules/layoutviewFeature/datalayer/Models/UserModel.dart';
 
 import '../../../../../../core/app_routes/app_route_name.dart';
 import '../../../../../../core/app_theme_manager/app_colors.dart';
@@ -6,15 +9,33 @@ import '../../../../../../widgets/avatar_bottom_sheet.dart';
 import '../../../../../../widgets/button_widget.dart';
 
 
-
-class Profile extends StatefulWidget {
-  const Profile({super.key});
+class EditProfile extends StatefulWidget {
+  const EditProfile({super.key});
 
   @override
-  State<Profile> createState() => _ProfileState();
+  State<EditProfile> createState() => _EditProfileState();
 }
 
-class _ProfileState extends State<Profile> {
+class _EditProfileState extends State<EditProfile> {
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+
+  UserModel ? currentuser;
+
+  void initState() {
+    super.initState();
+
+    loadcurrentuser();
+  }
+
+  Future<void> loadcurrentuser() async {
+    final String userid = await FirebaseAuth.instance.currentUser!.uid;
+    final user = await FirestoreCloudService.getuser(userid);
+    if (user != null) {
+      currentuser = user;
+    }
+  }
 
    int _selectedAvatar = -1;
   @override
@@ -212,59 +233,75 @@ class _ProfileState extends State<Profile> {
                 );
               },
 
-              child: CircleAvatar(
+              child: currentuser?.image == null ? CircleAvatar(
                 radius: 70,
-                backgroundImage: AssetImage("assets/images/gamer (1) (7).png"),
+                backgroundColor: AppColors.white,
+                child: Icon(Icons.person, size: 70, color: AppColors.offWhite),
+              ) : CircleAvatar(
+                radius: 70,
+                backgroundImage: AssetImage(currentuser!.image),
               ),
             ),
 
             SizedBox(height: 35),
-            SizedBox(
+            Form(
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextFormField(
+                      controller: nameController,
+                      style: theme.titleSmall?.copyWith(color: AppColors.white),
+
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 16,
+                        ),
+                        hintText: currentuser!.name,
+                        hintStyle: theme.titleSmall?.copyWith(
+                          color: AppColors.white,
+                          fontSize: 16,
+                        ),
+                        prefixIcon: Icon(
+                          Icons.person,
+                          color: AppColors.white,
+                          size: 31,
+                        ),
+                        filled: true,
+                        fillColor: AppColors.grey,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16),
+                          borderSide: BorderSide(color: AppColors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+
+
+                  SizedBox(
               width: double.infinity,
               child: TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "please enter your phone number";
+                  }
+                  if (value.length < 11 || value.length > 11) {
+                    return "please enter a valid phone number";
+                  }
+                },
+                controller: phoneController,
                 style: theme.titleSmall?.copyWith(color: AppColors.white),
-
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 10,
                     vertical: 16,
                   ),
-                  hintText: "Youssef Mohamed",
-                  hintStyle: theme.titleSmall?.copyWith(
-                    color: AppColors.white,
-                    fontSize: 16,
-                  ),
-                  prefixIcon: Icon(
-                    Icons.person,
-                    color: AppColors.white,
-                    size: 31,
-                  ),
-                  filled: true,
-                  fillColor: AppColors.grey,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide(color: AppColors.white),
-                  ),
-                ),
-              ),
-            ),
-
-            SizedBox(height: 19),
-
-            SizedBox(
-              width: double.infinity,
-              child: TextFormField(
-                style: theme.titleSmall?.copyWith(color: AppColors.white),
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 16,
-                  ),
-                  hintText: "01000000000",
+                  hintText: currentuser!.phone,
                   hintStyle: theme.titleSmall?.copyWith(
                     color: AppColors.white,
                     fontSize: 16,
@@ -287,7 +324,9 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
             ),
-
+                ],
+              ),
+            ),
             SizedBox(height: 20),
 
             Align(
@@ -323,6 +362,5 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
-
 
 }

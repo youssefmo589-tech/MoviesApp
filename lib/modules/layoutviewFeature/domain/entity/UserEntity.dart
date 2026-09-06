@@ -5,12 +5,12 @@ class UserEntity {
 
   String image;
 
-  String userID;
+  String? userID;
 
   UserEntity({
     required this.name,
     required this.phone,
     required this.image,
-    required this.userID,
+    this.userID,
   });
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../modules/auth/presentation/forget_password.dart';
 import '../../modules/auth/presentation/login_screen.dart';
 import '../../modules/auth/presentation/register_screen.dart';
-import '../../modules/layoutviewFeature/presentation/pages/profile/presentation/profile_screen.dart';
+import '../../modules/layoutviewFeature/presentation/pages/profile/presentation/Editprofile_screen.dart';
 import '../../modules/onboarding/on_boarding_screen.dart';
 import '../../modules/splash/splash_screen.dart';
 import 'app_route_name.dart';
@@ -20,8 +20,8 @@ abstract class AppConfig {
       case AppRouteName.forgetPassword:
         return MaterialPageRoute(builder: (context) => Forgetpassword());
 
-      case AppRouteName.profile:
-        return MaterialPageRoute(builder: (context) => Profile());
+      case AppRouteName.Editprofile:
+        return MaterialPageRoute(builder: (context) => EditProfile());
 
       case AppRouteName.login:
         return MaterialPageRoute(builder: (context) => LoginScreen());

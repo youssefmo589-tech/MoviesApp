@@ -71,7 +71,7 @@ class Forgetpassword extends StatelessWidget {
                     buttoncolor: AppColors.yellow,
                     titlecolor: AppColors.black,
                     onTap: () {
-                      Navigator.pushNamed(context, AppRouteName.profile);
+                      Navigator.pushNamed(context, AppRouteName.Editprofile);
                     }
                 ),
               ],

@@ -11,5 +11,5 @@ abstract class AppRouteName {
 
   static const String forgetPassword = '/ForgetPassword';
 
-  static const String profile = '/Profile';
+  static const String Editprofile = '/EditProfile';
 }

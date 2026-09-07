@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:movieapp/modules/layoutviewFeature/presentation/pages/profile/presentation/home_screen.dart';
 
 import 'core/Services/EasyLoadingService.dart';
 import 'core/app_routes/app_route_config.dart';
@@ -28,8 +29,7 @@ class MyApp extends StatelessWidget {
         builder: BotToastInit(),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRouteName.initial,
-      onGenerateRoute: AppConfig.onGenerateRoute,
+      home: const HomeScreen(),
       theme: AppThemeManager.theme,
     );
   }

@@ -78,7 +78,7 @@ class _HomeViewState extends State<HomeView> {
                       ),
                       Positioned.fill(
                         child: Container(
-                          color: const Color(0xFF121312).withOpacity(0.80),
+                          color: const Color(0xFF121312).withValues(alpha: 0.80),
                         ),
                       ),
                       Column(

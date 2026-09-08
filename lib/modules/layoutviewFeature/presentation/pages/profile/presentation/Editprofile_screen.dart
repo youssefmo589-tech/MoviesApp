@@ -6,6 +6,7 @@ import 'package:movieapp/core/FirebaseCloudService/FirestoreCloudService.dart';
 import 'package:movieapp/core/Services/BotToastservice.dart';
 import 'package:movieapp/modules/layoutviewFeature/datalayer/Models/UserModel.dart';
 import 'package:movieapp/modules/layoutviewFeature/presentation/manager/ProfileBloc.dart';
+
 import '../../../../../../core/app_routes/app_route_name.dart';
 import '../../../../../../core/app_theme_manager/app_colors.dart';
 import '../../../../../../widgets/avatar_bottom_sheet.dart';
@@ -369,6 +370,8 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                         ),
 
+                        SizedBox(height: 16,),
+
 
                         SizedBox(
                           width: double.infinity,
@@ -439,34 +442,56 @@ class _EditProfileState extends State<EditProfile> {
                     title: "Delete Account",
                     buttoncolor: AppColors.red,
                     titlecolor: AppColors.white,
+                    onTap: () async {
+                      try {
+                        EasyLoading.show();
+                        bool isdeleted = await FirestoreCloudService
+                            .deleteAccount(currentuser!.userID!);
+
+                        if (isdeleted) {
+                          EasyLoading.dismiss();
+                          AppSnackBar.success("Account deleted");
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, AppRouteName.login, (route) => false);
+                        }
+                        else {
+                          EasyLoading.dismiss();
+                          AppSnackBar.error("Something went wrong");
+                        }
+                      } catch (error) {
+                        EasyLoading.dismiss();
+                        AppSnackBar.error("Something went wrong");
+                      }
+                    },
                   ),
                   SizedBox(height: 19),
-                  GestureDetector(
 
+                  ButtonWidget(
+                    title: "Update Data",
+                    buttoncolor: AppColors.yellow,
+                    titlecolor: AppColors.black,
                     onTap: () {
+
                       if (_formKey.currentState!.validate()) {
                         if (currentuser?.name != nameController.text) {
-                          context.read<ProfileBloc>().add(EditnameEvent(
-                              name: nameController.text));
+                          context.read<ProfileBloc>().add(
+                            EditnameEvent(name: nameController.text),
+                          );
                         }
 
                         if (currentuser?.phone != phoneController.text) {
-                          context.read<ProfileBloc>().add(EditphoneEvent(
-                              phone: phoneController.text));
+                          context.read<ProfileBloc>().add(
+                            EditphoneEvent(phone: phoneController.text),
+                          );
                         }
+
                         if (_selectedimage != null) {
-                          context.read<ProfileBloc>().add(EditimageEvent(
-                              image: _selectedimage!));
+                          context.read<ProfileBloc>().add(
+                            EditimageEvent(image: _selectedimage!),
+                          );
                         }
                       }
                     },
-
-
-                    child: ButtonWidget(
-                      title: "Update Data",
-                      buttoncolor: AppColors.yellow,
-                      titlecolor: AppColors.black,
-                    ),
                   ),
                 ],
               ),

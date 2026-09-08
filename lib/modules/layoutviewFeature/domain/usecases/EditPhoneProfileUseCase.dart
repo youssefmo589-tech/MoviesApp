@@ -6,6 +6,6 @@ class EditPhoneProfileUseCase {
   EditPhoneProfileUseCase(this._layoutRepositories);
 
   Future<bool> call(String phone) async {
-    return await _layoutRepositories.EditNameProfile(phone);
+    return await _layoutRepositories.EditphoneProfile(phone);
   }
 }

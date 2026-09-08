@@ -25,10 +25,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<EditimageEvent>(_oneditimage);
   }
 
-  Future<void> _oneditname(
-    EditnameEvent event,
+  Future<void> _oneditname(EditnameEvent event,
     Emitter<ProfileState> emit,
   ) async {
+    emit(LoadingState());
+
     _layoutRepositories = RepositoryImp();
     _editNameProfileUseCase = EditNameProfileUseCase(_layoutRepositories);
 
@@ -45,6 +46,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     EditphoneEvent event,
     Emitter<ProfileState> emit,
   ) async {
+    emit(LoadingState());
     _layoutRepositories = RepositoryImp();
     _editPhoneProfileUseCase = EditPhoneProfileUseCase(_layoutRepositories);
 
@@ -57,10 +59,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
   }
 
-  Future<void> _oneditimage(
-    EditimageEvent event,
+  Future<void> _oneditimage(EditimageEvent event,
     Emitter<ProfileState> emit,
   ) async {
+    emit(LoadingState());
+
     _layoutRepositories = RepositoryImp();
     _editImageProfileUseCase = EditImageProfileUseCase(_layoutRepositories);
     final bool result = await _editImageProfileUseCase.call(event.image);

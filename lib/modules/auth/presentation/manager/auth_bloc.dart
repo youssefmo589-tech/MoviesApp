@@ -59,6 +59,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         event.email,
         event.password,
         event.phone,
+        event.avatarIndex,
       );
       emit(AuthSuccess(user));
     } catch (e) {

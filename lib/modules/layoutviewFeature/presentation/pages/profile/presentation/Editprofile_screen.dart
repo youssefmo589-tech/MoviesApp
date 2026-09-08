@@ -61,7 +61,7 @@ class _EditProfileState extends State<EditProfile> {
           }
           if (state is SuccessState) {
             EasyLoading.dismiss();
-            AppSnackBar.success("Updated Successfuly");
+            AppSnackBar.success("Updated Successfully");
           }
           if (state is ErrorState) {
             EasyLoading.dismiss();
@@ -310,7 +310,7 @@ class _EditProfileState extends State<EditProfile> {
                       child: _selectedimage != null ? CircleAvatar(
                         radius: 70,
                         backgroundImage: AssetImage(_selectedimage!),
-                      ) : currentuser?.image != null ?
+                      ) : (currentuser?.image != null && currentuser!.image.isNotEmpty) ?
                       CircleAvatar(
                         radius: 70,
                         backgroundImage: AssetImage(currentuser!.image),

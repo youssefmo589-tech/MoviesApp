@@ -175,6 +175,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         buttoncolor: AppColors.yellow,
                         titlecolor: AppColors.black,
                         icon: Assets.icons.google.svg(),
+                        onTap: () {
+                          Navigator.pushNamed( context, AppRouteName.Editprofile);
+                        },
                       ),
                       SizedBox(height: 33),
                       LanguageSelectorWidget(),

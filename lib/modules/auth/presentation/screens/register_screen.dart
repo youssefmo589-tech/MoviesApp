@@ -28,6 +28,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+  int _selectedAvatarIndex = 0;
 
   @override
   void dispose() {
@@ -47,6 +48,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           email: emailController.text.trim(),
           password: passwordController.text,
           phone: phoneController.text.trim(),
+          avatarIndex: _selectedAvatarIndex,
         ),
       );
     }
@@ -83,7 +85,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    AvatarsCarouselSliderWidget(),
+                    AvatarsCarouselSliderWidget(onAvatarSelected: (int value) {
+                      setState(() {
+                        _selectedAvatarIndex = value;
+                      });
+                    },
+                    selectedIndex: _selectedAvatarIndex,),
                     SizedBox(height: 10),
                     Center(child: Text("Avatar")),
                     SizedBox(height: 12),

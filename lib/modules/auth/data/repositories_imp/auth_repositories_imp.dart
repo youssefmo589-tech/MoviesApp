@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:movieapp/widgets/avatars_carousel_slider_widget.dart';
 
 import '../../../../core/FirebaseCloudService/FirestoreCloudService.dart';
 import '../../../layoutviewFeature/datalayer/Models/UserModel.dart';
@@ -27,13 +28,13 @@ class AuthRepositoriesImp implements AuthRepositories {
 
   @override
   Future<UserEntity> register(
-      String name, String email, String password, String phone) async {
+      String name, String email, String password, String phone, int avatarIndex) async {
     try {
       final user = await _dataSource.register(email, password);
 
       // Persist the profile alongside the auth account.
       await FirestoreCloudService.createuser(
-        UserModel(userID: user.uid, name: name, phone: phone, image: ''),
+        UserModel(userID: user.uid, name: name, phone: phone, image: AvatarsCarouselSliderWidget.avatarNames[avatarIndex]),
       );
 
       return UserEntity(uid: user.uid, email: user.email ?? email, name: name, phone: phone);

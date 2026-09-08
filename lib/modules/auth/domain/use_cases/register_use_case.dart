@@ -10,7 +10,14 @@ class RegisterUseCase {
     String email,
     String password,
     String phone,
+    int avatarIndex,
   ) async {
-    return await _authRepositories.register(name, email, password, phone);
+    return await _authRepositories.register(
+      name,
+      email,
+      password,
+      phone,
+      avatarIndex,
+    );
   }
 }

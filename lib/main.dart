@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:movieapp/core/app_routes/app_route_name.dart';
+import 'package:movieapp/modules/layoutviewFeature/presentation/pages/profile/presentation/Editprofile_screen.dart';
 import 'package:movieapp/modules/layoutviewFeature/presentation/pages/profile/presentation/home_screen.dart';
 
 import 'core/Services/EasyLoadingService.dart';

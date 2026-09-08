@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/core/app_theme_manager/app_colors.dart';
 import 'package:movieapp/modules/layoutviewFeature/presentation/manager/home_bloc.dart';
+import '../../../../../../core/app_routes/app_route_name.dart';
 import '../../../../datalayer/datasources/movie_remote_data_source.dart';
 import '../../../../datalayer/repositoryImp/movie_repository_impl.dart';
 import '../../../../domain/usecases/get_movies_usecase.dart';
@@ -168,22 +169,27 @@ class _HomeViewState extends State<HomeView> {
                               ),
                               InkWell(
                                 onTap: () {},
-                                child: const Row(
-                                  children: [
-                                    Text(
-                                      'See More',
-                                      style: TextStyle(
-                                        color: Color(0xFFFFB224),
-                                        fontSize: 14,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(context, AppRouteName.Editprofile);
+                                  },
+                                  child: const Row(
+                                    children: [
+                                      Text(
+                                        'See More',
+                                        style: TextStyle(
+                                          color: Color(0xFFFFB224),
+                                          fontSize: 14,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(width: 4),
-                                    Icon(
-                                      Icons.arrow_forward_ios,
-                                      color: Color(0xFFFFB224),
-                                      size: 12,
-                                    ),
-                                  ],
+                                      SizedBox(width: 4),
+                                      Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: Color(0xFFFFB224),
+                                        size: 12,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],

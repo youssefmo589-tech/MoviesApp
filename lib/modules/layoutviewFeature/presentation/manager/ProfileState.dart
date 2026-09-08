@@ -1,27 +1,31 @@
-part of 'ProfileBloc.dart';
+import 'package:movieapp/modules/layoutviewFeature/datalayer/models/movie_model.dart';
 
-class ProfileState extends Equatable {
-  const ProfileState();
+abstract class ProfileState {}
 
-  @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+class ProfileInitialState extends ProfileState {}
+
+class ProfileLoadingState extends ProfileState {}
+
+class ProfileLoadedState extends ProfileState {
+  final List<MovieModel> watchList;
+  final List<MovieModel> history;
+
+  ProfileLoadedState({
+    required this.watchList,
+    required this.history,
+  });
 }
 
-class InitialState extends ProfileState {
-  const InitialState();
+class ProfileErrorState extends ProfileState {
+  final String message;
+  ProfileErrorState(this.message);
 }
 
-class LoadingState extends ProfileState {
-  const LoadingState();
-}
+class LoadingState extends ProfileState {}
+
+class SuccessState extends ProfileState {}
 
 class ErrorState extends ProfileState {
-  final String message;
-
-  const ErrorState({required this.message});
-}
-
-class SuccessState extends ProfileState {
-  const SuccessState();
+  final String? message;
+  ErrorState(this.message);
 }

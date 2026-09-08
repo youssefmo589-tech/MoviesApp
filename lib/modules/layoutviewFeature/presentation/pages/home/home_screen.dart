@@ -8,20 +8,32 @@ import 'package:movieapp/modules/layoutviewFeature/domain/usecases/get_movies_us
 import 'package:movieapp/modules/layoutviewFeature/presentation/pages/home/presentation/tabs/browse_tab/browse_tab.dart';
 import 'package:movieapp/modules/layoutviewFeature/presentation/pages/home/presentation/tabs/profile_tab/profile_tab.dart';
 import 'package:movieapp/modules/layoutviewFeature/presentation/pages/home/presentation/tabs/search_tab/search_tab.dart';
+import 'package:movieapp/modules/layoutviewFeature/datalayer/datasources/profile_local_data_source.dart';
+import 'package:movieapp/modules/layoutviewFeature/presentation/manager/ProfileBloc.dart';
+
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => HomeBloc(
-        GetMoviesUseCase(
-          MovieRepositoryImpl(
-            MovieRemoteDataSource(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<HomeBloc>(
+          create: (context) => HomeBloc(
+            GetMoviesUseCase(
+              MovieRepositoryImpl(
+                MovieRemoteDataSource(),
+              ),
+            ),
+          )..add(FetchMoviesEvent()),
+        ),
+        BlocProvider<ProfileBloc>(
+          create: (context) => ProfileBloc(
+            localDataSource: ProfileLocalDataSourceImpl(),
           ),
         ),
-      )..add(FetchMoviesEvent()),
+      ],
       child: const MainLayoutView(),
     );
   }
@@ -244,7 +256,6 @@ class _HomeViewState extends State<HomeView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Dynamic Genre Tabs Header
                         SizedBox(
                           height: 40,
                           child: ListView.builder(

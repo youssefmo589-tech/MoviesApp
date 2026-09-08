@@ -1,74 +1,70 @@
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:movieapp/modules/layoutviewFeature/datalayer/repositoryImp/RepositoryImp.dart';
-
-import '../../domain/repository/LayoutviewRepositories.dart';
-import '../../domain/usecases/EditImageProfileUseCase.dart';
-import '../../domain/usecases/EditNameProfileUseCase.dart';
-import '../../domain/usecases/EditPhoneProfileUseCase.dart';
-
-part 'ProfileEvent.dart';
-part 'ProfileState.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movieapp/modules/layoutviewFeature/datalayer/datasources/profile_local_data_source.dart';
+import 'package:movieapp/modules/layoutviewFeature/presentation/manager/ProfileEvent.dart';
+import 'package:movieapp/modules/layoutviewFeature/presentation/manager/ProfileState.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  late EditImageProfileUseCase _editImageProfileUseCase;
+  final ProfileLocalDataSource localDataSource;
 
-  late EditNameProfileUseCase _editNameProfileUseCase;
+  ProfileBloc({required this.localDataSource}) : super(ProfileInitialState()) {
+    on<LoadProfileDataEvent>((event, emit) async {
+      emit(ProfileLoadingState());
+      try {
+        final watchList = await localDataSource.getWatchList();
+        final history = await localDataSource.getHistory();
+        emit(ProfileLoadedState(watchList: watchList, history: history));
+      } catch (e) {
+        emit(ProfileErrorState(e.toString()));
+      }
+    });
 
-  late EditPhoneProfileUseCase _editPhoneProfileUseCase;
+    on<AddToWatchListEvent>((event, emit) async {
+      try {
+        final currentWatchList = await localDataSource.getWatchList();
+        currentWatchList.add(event.movie);
+        await localDataSource.saveToWatchList(currentWatchList);
+        add(LoadProfileDataEvent());
+      } catch (e) {
+        emit(ProfileErrorState(e.toString()));
+      }
+    });
 
-  late LayoutRepositories _layoutRepositories;
+    on<AddToHistoryEvent>((event, emit) async {
+      try {
+        final currentHistory = await localDataSource.getHistory();
+        currentHistory.add(event.movie);
+        await localDataSource.saveToHistory(currentHistory);
+        add(LoadProfileDataEvent());
+      } catch (e) {
+        emit(ProfileErrorState(e.toString()));
+      }
+    });
 
-  ProfileBloc() : super(LoadingState()) {
-    on<EditnameEvent>(_oneditname);
-    on<EditphoneEvent>(_oneditphone);
-    on<EditimageEvent>(_oneditimage);
-  }
+    on<EditnameEvent>((event, emit) async {
+      emit(LoadingState());
+      try {
+        emit(SuccessState());
+      } catch (e) {
+        emit(ErrorState(e.toString()));
+      }
+    });
 
-  Future<void> _oneditname(
-    EditnameEvent event,
-    Emitter<ProfileState> emit,
-  ) async {
-    _layoutRepositories = RepositoryImp();
-    _editNameProfileUseCase = EditNameProfileUseCase(_layoutRepositories);
+    on<EditphoneEvent>((event, emit) async {
+      emit(LoadingState());
+      try {
+        emit(SuccessState());
+      } catch (e) {
+        emit(ErrorState(e.toString()));
+      }
+    });
 
-    final bool result = await _editNameProfileUseCase.call(event.name);
-
-    if (result) {
-      emit(SuccessState());
-    } else {
-      emit(ErrorState(message: 'error'));
-    }
-  }
-
-  Future<void> _oneditphone(
-    EditphoneEvent event,
-    Emitter<ProfileState> emit,
-  ) async {
-    _layoutRepositories = RepositoryImp();
-    _editPhoneProfileUseCase = EditPhoneProfileUseCase(_layoutRepositories);
-
-    final bool result = await _editPhoneProfileUseCase.call(event.phone);
-
-    if (result) {
-      emit(SuccessState());
-    } else {
-      emit(ErrorState(message: 'error'));
-    }
-  }
-
-  Future<void> _oneditimage(
-    EditimageEvent event,
-    Emitter<ProfileState> emit,
-  ) async {
-    _layoutRepositories = RepositoryImp();
-    _editImageProfileUseCase = EditImageProfileUseCase(_layoutRepositories);
-    final bool result = await _editImageProfileUseCase.call(event.image);
-
-    if (result) {
-      emit(SuccessState());
-    } else {
-      emit(ErrorState(message: 'error'));
-    }
+    on<EditimageEvent>((event, emit) async {
+      emit(LoadingState());
+      try {
+        emit(SuccessState());
+      } catch (e) {
+        emit(ErrorState(e.toString()));
+      }
+    });
   }
 }

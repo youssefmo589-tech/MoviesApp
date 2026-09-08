@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../modules/auth/presentation/forget_password.dart';
 import '../../modules/auth/presentation/login_screen.dart';
 import '../../modules/auth/presentation/register_screen.dart';
+import '../../modules/layoutviewFeature/datalayer/datasources/profile_local_data_source.dart';
 import '../../modules/layoutviewFeature/presentation/manager/ProfileBloc.dart';
+import '../../modules/layoutviewFeature/presentation/pages/home/presentation/tabs/profile_tab/profile_tab.dart';
 import '../../modules/layoutviewFeature/presentation/pages/profile/presentation/Editprofile_screen.dart';
 import '../../modules/onboarding/on_boarding_screen.dart';
 import '../../modules/splash/splash_screen.dart';
@@ -14,25 +16,29 @@ abstract class AppConfig {
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRouteName.initial:
-        return MaterialPageRoute(builder: (context) => SplashScreen());
+        return MaterialPageRoute(builder: (context) => const SplashScreen());
 
       case AppRouteName.onBoarding:
-        return MaterialPageRoute(builder: (context) => OnBoardingScreen());
+        return MaterialPageRoute(builder: (context) => const OnBoardingScreen());
 
       case AppRouteName.forgetPassword:
-        return MaterialPageRoute(builder: (context) => Forgetpassword());
+        return MaterialPageRoute(builder: (context) => const Forgetpassword());
 
       case AppRouteName.Editprofile:
-        return MaterialPageRoute(builder: (context) =>
-            BlocProvider<ProfileBloc>(
-                create: (context) => ProfileBloc(),
-                child: EditProfile()));
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => ProfileBloc(
+              localDataSource: ProfileLocalDataSourceImpl(),
+            ),
+            child: const EditProfile(),
+          ),
+        );
 
       case AppRouteName.login:
-        return MaterialPageRoute(builder: (context) => LoginScreen());
+        return MaterialPageRoute(builder: (context) => const LoginScreen());
 
       case AppRouteName.register:
-        return MaterialPageRoute(builder: (context) => RegisterScreen());
+        return MaterialPageRoute(builder: (context) => const RegisterScreen());
 
       default:
         return null;

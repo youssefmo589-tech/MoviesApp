@@ -10,7 +10,7 @@ class UserModel extends UserEntity {
     super.userID,
   });
 
-  factory UserModel.fromjson(Map<String, dynamic> json) {
+  factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       userID: json['userID'],
       name: json['name'],
@@ -19,7 +19,19 @@ class UserModel extends UserEntity {
     );
   }
 
-  Map<String, dynamic> tofirestore() {
-    return {"name": name, "phone": phone, "image": image, "userID": userID};
+
+  factory UserModel.fromjson(Map<String, dynamic> json) => UserModel.fromJson(json);
+
+
+  Map<String, dynamic> toJson() {
+    return {
+      "name": name,
+      "phone": phone,
+      "image": image,
+      "userID": userID,
+    };
   }
+
+
+  Map<String, dynamic> tofirestore() => toJson();
 }

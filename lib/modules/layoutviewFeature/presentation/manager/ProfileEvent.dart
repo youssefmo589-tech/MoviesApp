@@ -1,32 +1,30 @@
-part of 'ProfileBloc.dart';
+import 'package:movieapp/modules/layoutviewFeature/datalayer/models/movie_model.dart';
 
-sealed class ProfileEvent extends Equatable {
-  const ProfileEvent();
+abstract class ProfileEvent {}
+
+class LoadProfileDataEvent extends ProfileEvent {}
+
+class AddToWatchListEvent extends ProfileEvent {
+  final MovieModel movie;
+  AddToWatchListEvent(this.movie);
+}
+
+class AddToHistoryEvent extends ProfileEvent {
+  final MovieModel movie;
+  AddToHistoryEvent(this.movie);
 }
 
 class EditnameEvent extends ProfileEvent {
   final String name;
-
   EditnameEvent({required this.name});
-
-  @override
-  List<Object?> get props => throw UnimplementedError();
 }
 
 class EditphoneEvent extends ProfileEvent {
   final String phone;
-
   EditphoneEvent({required this.phone});
-
-  @override
-  List<Object?> get props => throw UnimplementedError();
 }
 
 class EditimageEvent extends ProfileEvent {
   final String image;
-
   EditimageEvent({required this.image});
-
-  @override
-  List<Object?> get props => throw UnimplementedError();
 }

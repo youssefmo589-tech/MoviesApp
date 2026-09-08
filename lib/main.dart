@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:movieapp/modules/layoutviewFeature/presentation/pages/profile/presentation/home_screen.dart';
-
 import 'core/Services/EasyLoadingService.dart';
 import 'core/app_theme_manager/app_theme_manager.dart';
 import 'firebase_options.dart';

@@ -63,6 +63,8 @@ class _EditProfileState extends State<EditProfile> {
           if (state is SuccessState) {
             EasyLoading.dismiss();
             AppSnackBar.success("Updated Successfully");
+            Navigator.pop(context);
+
           }
           if (state is ErrorState) {
             EasyLoading.dismiss();
@@ -490,6 +492,7 @@ class _EditProfileState extends State<EditProfile> {
                             EditimageEvent(image: _selectedimage!),
                           );
                         }
+
                       }
                     },
                   ),

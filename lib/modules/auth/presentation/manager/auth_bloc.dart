@@ -27,8 +27,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<ForgetPasswordRequested>(_onForgetPasswordRequested);
   }
 
-  /// Convenience factory that wires up the real Firebase-backed
-  /// dependencies. Use the main constructor directly (with fakes) in tests.
   factory AuthBloc.withDefaultDependencies() {
     final AuthRepositories repository =
     AuthRepositoriesImp(FirebaseAuthDataSource());

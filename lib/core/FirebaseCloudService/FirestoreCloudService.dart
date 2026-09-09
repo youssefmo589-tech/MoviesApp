@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../modules/layoutviewFeature/datalayer/Models/UserModel.dart';
 
@@ -43,6 +44,8 @@ class FirestoreCloudService {
 
       final docRef = collectionref.doc(userID);
       await docRef.delete();
+      await FirebaseAuth.instance.currentUser?.delete();
+
 
       return true;
     } catch (error) {

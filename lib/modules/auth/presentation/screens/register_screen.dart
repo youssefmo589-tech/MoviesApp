@@ -160,7 +160,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           },
                         ),
                         ButtonWidget(
-                          title: isLoading ? "Please wait..." : "Create Account",
+                          title: "Create Account",
                           buttoncolor: AppColors.yellow,
                           titlecolor: AppColors.black,
                           onTap: isLoading ? null : () => _submit(context),

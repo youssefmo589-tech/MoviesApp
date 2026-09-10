@@ -118,7 +118,7 @@ class _ForgetpasswordState extends State<Forgetpassword> {
                         ),
                       ),
                       ButtonWidget(
-                        title: isLoading ? "Please wait..." : "Verify Email",
+                        title: "Verify Email",
                         buttoncolor: AppColors.yellow,
                         titlecolor: AppColors.black,
                         onTap: isLoading ? null : () => _submit(context),

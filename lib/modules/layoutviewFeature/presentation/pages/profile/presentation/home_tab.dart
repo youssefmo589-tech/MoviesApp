@@ -7,8 +7,8 @@ import '../../../../datalayer/repositoryImp/movie_repository_impl.dart';
 import '../../../../domain/usecases/get_movies_usecase.dart';
 
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class HomeTab extends StatelessWidget {
+  const HomeTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

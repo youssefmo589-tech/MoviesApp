@@ -5,7 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:movieapp/core/FirebaseCloudService/FirestoreCloudService.dart';
 import 'package:movieapp/core/Services/BotToastservice.dart';
 import 'package:movieapp/modules/layoutviewFeature/datalayer/Models/UserModel.dart';
-import 'package:movieapp/modules/layoutviewFeature/presentation/manager/ProfileBloc.dart';
+import 'package:movieapp/modules/layoutviewFeature/presentation/manager/editProfileBloc.dart';
 
 import '../../../../../../core/app_routes/app_route_name.dart';
 import '../../../../../../core/app_theme_manager/app_colors.dart';
@@ -27,6 +27,7 @@ class _EditProfileState extends State<EditProfile> {
 
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+
 
   UserModel ? currentuser;
 
@@ -55,7 +56,7 @@ class _EditProfileState extends State<EditProfile> {
 
     final theme = Theme.of(context).textTheme;
 
-    return BlocConsumer<ProfileBloc, ProfileState>(
+    return BlocConsumer<EditProfileBloc, EditProfileState>(
         listener: (context, state) {
           if (state is LoadingState) {
             EasyLoading.show();
@@ -476,19 +477,19 @@ class _EditProfileState extends State<EditProfile> {
 
                       if (_formKey.currentState!.validate()) {
                         if (currentuser?.name != nameController.text) {
-                          context.read<ProfileBloc>().add(
+                          context.read<EditProfileBloc>().add(
                             EditnameEvent(name: nameController.text),
                           );
                         }
 
                         if (currentuser?.phone != phoneController.text) {
-                          context.read<ProfileBloc>().add(
+                          context.read<EditProfileBloc>().add(
                             EditphoneEvent(phone: phoneController.text),
                           );
                         }
 
                         if (_selectedimage != null) {
-                          context.read<ProfileBloc>().add(
+                          context.read<EditProfileBloc>().add(
                             EditimageEvent(image: _selectedimage!),
                           );
                         }

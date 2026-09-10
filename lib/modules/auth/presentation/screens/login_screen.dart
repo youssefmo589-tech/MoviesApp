@@ -176,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         titlecolor: AppColors.black,
                         icon: Assets.icons.google.svg(),
                         onTap: () {
-                          Navigator.pushNamed( context, AppRouteName.Editprofile);
+                          // Navigator.pushNamed( context, AppRouteName.Editprofile);
                         },
                       ),
                       SizedBox(height: 33),

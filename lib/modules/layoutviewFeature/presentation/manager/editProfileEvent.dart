@@ -1,4 +1,4 @@
-part of 'ProfileBloc.dart';
+part of 'editProfileBloc.dart';
 
 sealed class ProfileEvent extends Equatable {
   const ProfileEvent();

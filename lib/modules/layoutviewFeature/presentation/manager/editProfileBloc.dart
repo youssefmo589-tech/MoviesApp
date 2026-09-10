@@ -7,8 +7,8 @@ import '../../domain/usecases/EditImageProfileUseCase.dart';
 import '../../domain/usecases/EditNameProfileUseCase.dart';
 import '../../domain/usecases/EditPhoneProfileUseCase.dart';
 
-part 'ProfileEvent.dart';
-part 'ProfileState.dart';
+part 'editProfileEvent.dart';
+part 'editProfileState.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   late EditImageProfileUseCase _editImageProfileUseCase;

@@ -5,7 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:movieapp/core/FirebaseCloudService/FirestoreCloudService.dart';
 import 'package:movieapp/core/Services/BotToastservice.dart';
 import 'package:movieapp/modules/layoutviewFeature/datalayer/Models/UserModel.dart';
-import 'package:movieapp/modules/layoutviewFeature/presentation/manager/ProfileBloc.dart';
+import 'package:movieapp/modules/layoutviewFeature/presentation/manager/editProfileBloc.dart';
 
 import '../../../../../../core/app_routes/app_route_name.dart';
 import '../../../../../../core/app_theme_manager/app_colors.dart';

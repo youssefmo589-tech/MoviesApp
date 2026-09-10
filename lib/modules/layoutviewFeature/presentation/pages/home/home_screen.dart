@@ -9,7 +9,7 @@ import 'package:movieapp/modules/layoutviewFeature/presentation/pages/home/prese
 import 'package:movieapp/modules/layoutviewFeature/presentation/pages/home/presentation/tabs/profile_tab/profile_tab.dart';
 import 'package:movieapp/modules/layoutviewFeature/presentation/pages/home/presentation/tabs/search_tab/search_tab.dart';
 import 'package:movieapp/modules/layoutviewFeature/datalayer/datasources/profile_local_data_source.dart';
-import 'package:movieapp/modules/layoutviewFeature/presentation/manager/ProfileBloc.dart';
+import 'package:movieapp/modules/layoutviewFeature/presentation/manager/editProfileBloc.dart';
 
 
 class HomeScreen extends StatelessWidget {

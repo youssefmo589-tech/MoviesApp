@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/modules/layoutviewFeature/datalayer/models/movie_model.dart';
-import 'package:movieapp/modules/layoutviewFeature/presentation/manager/ProfileBloc.dart';
-import 'package:movieapp/modules/layoutviewFeature/presentation/manager/ProfileEvent.dart';
-import 'package:movieapp/modules/layoutviewFeature/presentation/manager/ProfileState.dart';
+import 'package:movieapp/modules/layoutviewFeature/presentation/manager/editProfileBloc.dart';
+import 'package:movieapp/modules/layoutviewFeature/presentation/manager/editProfileEvent.dart';
+import 'package:movieapp/modules/layoutviewFeature/presentation/manager/editProfileState.dart';
 import 'package:movieapp/modules/layoutviewFeature/presentation/pages/profile/presentation/Editprofile_screen.dart';
 
 class ProfileTab extends StatefulWidget {

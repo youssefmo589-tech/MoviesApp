@@ -6,7 +6,7 @@ import 'package:movieapp/modules/layoutviewFeature/presentation/pages/profile/pr
 import '../../modules/auth/presentation/screens/forget_password.dart';
 import '../../modules/auth/presentation/screens/login_screen.dart';
 import '../../modules/auth/presentation/screens/register_screen.dart';
-import '../../modules/layoutviewFeature/presentation/manager/ProfileBloc.dart';
+import '../../modules/layoutviewFeature/presentation/manager/editProfileBloc.dart';
 import '../../modules/layoutviewFeature/presentation/pages/profile/presentation/Editprofile_screen.dart';
 import '../../modules/onboarding/on_boarding_screen.dart';
 import '../../modules/splash/splash_screen.dart';

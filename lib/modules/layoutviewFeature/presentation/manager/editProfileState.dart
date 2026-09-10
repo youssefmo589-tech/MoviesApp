@@ -1,5 +1,5 @@
 
-part of 'ProfileBloc.dart';
+part of 'editProfileBloc.dart';
 
 abstract class ProfileState extends Equatable {
   const ProfileState();

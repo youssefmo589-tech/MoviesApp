@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:movieapp/modules/layoutviewFeature/datalayer/models/movie_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class ProfileLocalDataSource {
 

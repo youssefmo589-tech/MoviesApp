@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/core/app_theme_manager/app_colors.dart';
-import 'package:movieapp/modules/layoutviewFeature/presentation/manager/home_bloc.dart';
 import 'package:movieapp/modules/layoutviewFeature/datalayer/datasources/movie_remote_data_source.dart';
 import 'package:movieapp/modules/layoutviewFeature/datalayer/repositoryImp/movie_repository_impl.dart';
 import 'package:movieapp/modules/layoutviewFeature/domain/usecases/get_movies_usecase.dart';
@@ -10,6 +9,10 @@ import 'package:movieapp/modules/layoutviewFeature/presentation/pages/home/prese
 import 'package:movieapp/modules/layoutviewFeature/presentation/pages/home/presentation/tabs/search_tab/search_tab.dart';
 import 'package:movieapp/modules/layoutviewFeature/datalayer/datasources/profile_local_data_source.dart';
 import 'package:movieapp/modules/layoutviewFeature/presentation/manager/editProfileBloc.dart';
+
+import '../../manager/home_bloc.dart';
+import '../../manager/profile_bloc.dart';
+import '../profile/presentation/home_tab.dart';
 
 
 class HomeScreen extends StatelessWidget {
@@ -50,7 +53,7 @@ class _MainLayoutViewState extends State<MainLayoutView> {
   int _selectedTabIndex = 0;
 
   final List<Widget> _tabs = const [
-    HomeView(),
+    HomeTab(),
     SearchTab(),
     BrowseTab(),
     ProfileTab(),
@@ -123,7 +126,7 @@ class _HomeViewState extends State<HomeView> {
                 style: const TextStyle(color: Colors.white),
               ),
             );
-          } if (state is HomeSuccess) {
+          } if (state is HomeLoaded) {
             final movies = state.movies;
             if (movies.isEmpty) {
               return const Center(

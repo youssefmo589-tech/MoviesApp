@@ -115,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       SizedBox(height: 34),
                       ButtonWidget(
-                        title: isLoading ? "Please wait..." : "Login",
+                        title: "Login",
                         buttoncolor: AppColors.yellow,
                         titlecolor: AppColors.black,
                         onTap: isLoading ? null : () => _submit(context),

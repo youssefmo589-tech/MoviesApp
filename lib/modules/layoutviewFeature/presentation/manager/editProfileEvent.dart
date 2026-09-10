@@ -1,10 +1,10 @@
 part of 'editProfileBloc.dart';
 
-sealed class ProfileEvent extends Equatable {
-  const ProfileEvent();
+sealed class EditProfileEvent extends Equatable {
+  const EditProfileEvent();
 }
 
-class EditnameEvent extends ProfileEvent {
+class EditnameEvent extends EditProfileEvent {
   final String name;
 
   EditnameEvent({required this.name});
@@ -13,7 +13,7 @@ class EditnameEvent extends ProfileEvent {
   List<Object?> get props => throw UnimplementedError();
 }
 
-class EditphoneEvent extends ProfileEvent {
+class EditphoneEvent extends EditProfileEvent {
   final String phone;
 
   EditphoneEvent({required this.phone});
@@ -22,7 +22,7 @@ class EditphoneEvent extends ProfileEvent {
   List<Object?> get props => throw UnimplementedError();
 }
 
-class EditimageEvent extends ProfileEvent {
+class EditimageEvent extends EditProfileEvent {
   final String image;
 
   EditimageEvent({required this.image});

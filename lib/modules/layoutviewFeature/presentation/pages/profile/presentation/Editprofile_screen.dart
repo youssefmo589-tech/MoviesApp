@@ -28,6 +28,7 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
 
+
   UserModel ? currentuser;
 
   void initState() {
@@ -55,7 +56,7 @@ class _EditProfileState extends State<EditProfile> {
 
     final theme = Theme.of(context).textTheme;
 
-    return BlocConsumer<ProfileBloc, ProfileState>(
+    return BlocConsumer<EditProfileBloc, EditProfileState>(
         listener: (context, state) {
           if (state is LoadingState) {
             EasyLoading.show();
@@ -476,19 +477,19 @@ class _EditProfileState extends State<EditProfile> {
 
                       if (_formKey.currentState!.validate()) {
                         if (currentuser?.name != nameController.text) {
-                          context.read<ProfileBloc>().add(
+                          context.read<EditProfileBloc>().add(
                             EditnameEvent(name: nameController.text),
                           );
                         }
 
                         if (currentuser?.phone != phoneController.text) {
-                          context.read<ProfileBloc>().add(
+                          context.read<EditProfileBloc>().add(
                             EditphoneEvent(phone: phoneController.text),
                           );
                         }
 
                         if (_selectedimage != null) {
-                          context.read<ProfileBloc>().add(
+                          context.read<EditProfileBloc>().add(
                             EditimageEvent(image: _selectedimage!),
                           );
                         }

@@ -1,11 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/modules/layoutviewFeature/datalayer/models/movie_model.dart';
-import 'package:movieapp/modules/layoutviewFeature/presentation/manager/editProfileBloc.dart';
-import 'package:movieapp/modules/layoutviewFeature/presentation/manager/editProfileEvent.dart';
-import 'package:movieapp/modules/layoutviewFeature/presentation/manager/editProfileState.dart';
-import 'package:movieapp/modules/layoutviewFeature/presentation/pages/profile/presentation/Editprofile_screen.dart';
+import 'package:movieapp/modules/layoutviewFeature/presentation/manager/profile_event.dart';
 
+import '../../../../../../../../core/FirebaseCloudService/FirestoreCloudService.dart';
+import '../../../../../../../../core/app_routes/app_route_name.dart';
+import '../../../../../../datalayer/Models/UserModel.dart';
+import '../../../../../manager/profile_bloc.dart';
+import '../../../../../manager/profile_state.dart';
+//Exit
 class ProfileTab extends StatefulWidget {
   const ProfileTab({Key? key}) : super(key: key);
 
@@ -15,29 +19,36 @@ class ProfileTab extends StatefulWidget {
 
 class _ProfileTabState extends State<ProfileTab> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-
-  final Map<String, String> _avatarMap = const {
-    'gamer1': 'assets/images/gamer (1).png',
-    'gamer11': 'assets/images/gamer (1) (1).png',
-    'gamer12': 'assets/images/gamer (1) (2).png',
-    'gamer13': 'assets/images/gamer (1) (3).png',
-    'gamer14': 'assets/images/gamer (1) (4).png',
-    'gamer15': 'assets/images/gamer (1) (5).png',
-    'gamer16': 'assets/images/gamer (1) (6).png',
-    'gamer17': 'assets/images/gamer (1) (7).png',
-    'gamer18': 'assets/images/gamer (1) (8).png',
-  };
+  TextEditingController nameController = TextEditingController();
+  TextEditingController imageController = TextEditingController();
+  UserModel ? currentuser;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     context.read<ProfileBloc>().add(LoadProfileDataEvent());
+    loadCurrentUser();
+  }
+
+  Future<void> loadCurrentUser() async {
+    final String userid = await FirebaseAuth.instance.currentUser!.uid;
+    final user = await FirestoreCloudService.getuser(userid);
+    if (user != null) {
+      setState(() {
+        currentuser = user;
+        nameController.text = currentuser?.name ?? "";
+        imageController.text = currentuser?.image ?? "";
+      });
+
+    }
   }
 
   @override
   void dispose() {
     _tabController.dispose();
+    nameController.dispose();
+    imageController.dispose();
     super.dispose();
   }
 
@@ -54,14 +65,11 @@ class _ProfileTabState extends State<ProfileTab> with SingleTickerProviderStateM
 
             List<MovieModel> watchList = [];
             List<MovieModel> history = [];
-            String avatarKey = 'gamer16';
 
             if (state is ProfileLoadedState) {
               watchList = state.watchList;
               history = state.history;
             }
-
-            final selectedAvatarPath = _avatarMap[avatarKey] ?? 'assets/images/gamer (1) (6).png';
 
             return Column(
               children: [
@@ -70,10 +78,24 @@ class _ProfileTabState extends State<ProfileTab> with SingleTickerProviderStateM
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Row(
                     children: [
-                      CircleAvatar(
-                        radius: 40,
-                        backgroundColor: Colors.transparent,
-                        backgroundImage: AssetImage(selectedAvatarPath),
+                      Column(
+                        spacing: 15,
+                        children: [
+                          CircleAvatar(
+                            radius: 40,
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: AssetImage(imageController.text),
+                          ),
+                          Text(
+                            nameController.text,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+
+                        ],
                       ),
                       const SizedBox(width: 24),
                       Expanded(
@@ -88,14 +110,6 @@ class _ProfileTabState extends State<ProfileTab> with SingleTickerProviderStateM
                               ],
                             ),
                             const SizedBox(height: 8),
-                            const Text(
-                              "John Safwat",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
                           ],
                         ),
                       ),
@@ -116,15 +130,7 @@ class _ProfileTabState extends State<ProfileTab> with SingleTickerProviderStateM
                             ),
                           ),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => BlocProvider.value(
-                                  value: context.read<ProfileBloc>(),
-                                  child: const EditProfile(),
-                                ),
-                              ),
-                            );
+                            Navigator.pushNamed(context, AppRouteName.Editprofile,);
                           },
                           child: const Text(
                             "Edit Profile",
@@ -141,7 +147,9 @@ class _ProfileTabState extends State<ProfileTab> with SingleTickerProviderStateM
                           ),
                           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, AppRouteName.login,);
+                        },
                         child: const Row(
                           children: [
                             Text("Exit ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),

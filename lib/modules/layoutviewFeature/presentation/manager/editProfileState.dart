@@ -1,22 +1,22 @@
 
 part of 'editProfileBloc.dart';
 
-abstract class ProfileState extends Equatable {
-  const ProfileState();
+abstract class EditProfileState extends Equatable {
+  const EditProfileState();
 
   @override
   List<Object?> get props => [];
 }
 
-class InitialState extends ProfileState {
+class InitialState extends EditProfileState {
   const InitialState();
 }
 
-class LoadingState extends ProfileState {
+class LoadingState extends EditProfileState {
   const LoadingState();
 }
 
-class ErrorState extends ProfileState {
+class ErrorState extends EditProfileState {
   final String message;
 
   const ErrorState({required this.message});
@@ -25,6 +25,6 @@ class ErrorState extends ProfileState {
   List<Object?> get props => [message];
 }
 
-class SuccessState extends ProfileState {
+class SuccessState extends EditProfileState {
   const SuccessState();
 }

@@ -8,8 +8,8 @@ import '../../../../datalayer/repositoryImp/movie_repository_impl.dart';
 import '../../../../domain/usecases/get_movies_usecase.dart';
 
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class HomeTab extends StatelessWidget {
+  const HomeTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -169,27 +169,22 @@ class _HomeViewState extends State<HomeView> {
                               ),
                               InkWell(
                                 onTap: () {},
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.pushNamed(context, AppRouteName.Editprofile);
-                                  },
-                                  child: const Row(
-                                    children: [
-                                      Text(
-                                        'See More',
-                                        style: TextStyle(
-                                          color: Color(0xFFFFB224),
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                      SizedBox(width: 4),
-                                      Icon(
-                                        Icons.arrow_forward_ios,
+                                child: const Row(
+                                  children: [
+                                    Text(
+                                      'See More',
+                                      style: TextStyle(
                                         color: Color(0xFFFFB224),
-                                        size: 12,
+                                        fontSize: 14,
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                    SizedBox(width: 4),
+                                    Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: Color(0xFFFFB224),
+                                      size: 12,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],

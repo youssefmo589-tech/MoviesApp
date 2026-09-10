@@ -10,7 +10,7 @@ import '../../domain/usecases/EditPhoneProfileUseCase.dart';
 part 'editProfileEvent.dart';
 part 'editProfileState.dart';
 
-class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
+class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
   late EditImageProfileUseCase _editImageProfileUseCase;
 
   late EditNameProfileUseCase _editNameProfileUseCase;
@@ -19,14 +19,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   late LayoutRepositories _layoutRepositories;
 
-  ProfileBloc() : super(LoadingState()) {
+  EditProfileBloc() : super(LoadingState()) {
     on<EditnameEvent>(_oneditname);
     on<EditphoneEvent>(_oneditphone);
     on<EditimageEvent>(_oneditimage);
   }
 
   Future<void> _oneditname(EditnameEvent event,
-    Emitter<ProfileState> emit,
+    Emitter<EditProfileState> emit,
   ) async {
     emit(LoadingState());
 
@@ -44,7 +44,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   Future<void> _oneditphone(
     EditphoneEvent event,
-    Emitter<ProfileState> emit,
+    Emitter<EditProfileState> emit,
   ) async {
     emit(LoadingState());
     _layoutRepositories = RepositoryImp();
@@ -60,7 +60,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   Future<void> _oneditimage(EditimageEvent event,
-    Emitter<ProfileState> emit,
+    Emitter<EditProfileState> emit,
   ) async {
     emit(LoadingState());
 

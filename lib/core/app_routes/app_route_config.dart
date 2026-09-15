@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movieapp/modules/MovieDetailsFeature/presentation/pages/MovieDetails.dart';
 import 'package:movieapp/modules/auth/presentation/manager/auth_bloc.dart';
 import 'package:movieapp/modules/layoutviewFeature/presentation/pages/home/presentation/tabs/profile_tab/profile_tab.dart';
 
@@ -20,6 +21,9 @@ abstract class AppConfig {
     switch (settings.name) {
       case AppRouteName.initial:
         return MaterialPageRoute(builder: (context) => SplashScreen());
+
+      case AppRouteName.MovieDetails:
+        return MaterialPageRoute(builder: (context) => MovieDetails());
 
       case AppRouteName.onBoarding:
         return MaterialPageRoute(builder: (context) => OnBoardingScreen());

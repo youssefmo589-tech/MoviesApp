@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movieapp/core/app_routes/app_route_name.dart';
 import 'package:movieapp/core/app_theme_manager/app_colors.dart';
 import 'package:movieapp/modules/layoutviewFeature/presentation/manager/home_bloc.dart';
 import '../../../../datalayer/datasources/movie_remote_data_source.dart';
@@ -111,6 +112,7 @@ class _HomeViewState extends State<HomeView> {
                                 bool isCurrent = currentIndex == index;
                                 return GestureDetector(
                                   onTap: () {
+                                    Navigator.pushNamed(context, AppRouteName.MovieDetails, arguments: movies[index].id);
                                   },
                                   child: AnimatedScale(
                                     scale: isCurrent ? 1.0 : 0.85,
@@ -199,6 +201,7 @@ class _HomeViewState extends State<HomeView> {
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () {
+                                  Navigator.pushNamed(context, AppRouteName.MovieDetails, arguments: movies[index].id);
                                 },
                                 child: Container(
                                   width: 146,

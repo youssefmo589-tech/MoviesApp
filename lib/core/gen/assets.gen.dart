@@ -41,11 +41,17 @@ class $AssetsFontsGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/Vector.svg
+  SvgGenImage get vector => const SvgGenImage('assets/icons/Vector.svg');
+
   /// File path: assets/icons/email icon.svg
   SvgGenImage get emailIcon => const SvgGenImage('assets/icons/email icon.svg');
 
   /// File path: assets/icons/google.svg
   SvgGenImage get google => const SvgGenImage('assets/icons/google.svg');
+
+  /// File path: assets/icons/like.svg
+  SvgGenImage get like => const SvgGenImage('assets/icons/like.svg');
 
   /// File path: assets/icons/name.svg
   SvgGenImage get name => const SvgGenImage('assets/icons/name.svg');
@@ -60,19 +66,33 @@ class $AssetsIconsGen {
   /// File path: assets/icons/phone.svg
   SvgGenImage get phone => const SvgGenImage('assets/icons/phone.svg');
 
+  /// File path: assets/icons/stars.svg
+  SvgGenImage get stars => const SvgGenImage('assets/icons/stars.svg');
+
+  /// File path: assets/icons/time.svg
+  SvgGenImage get time => const SvgGenImage('assets/icons/time.svg');
+
   /// List of all assets
   List<SvgGenImage> get values => [
+    vector,
     emailIcon,
     google,
+    like,
     name,
     password,
     passwordeye,
     phone,
+    stars,
+    time,
   ];
 }
 
 class $AssetsImagesGen {
   const $AssetsImagesGen();
+
+  /// File path: assets/images/Available Now.png
+  AssetGenImage get availableNow =>
+      const AssetGenImage('assets/images/Available Now.png');
 
   /// File path: assets/images/EG.png
   AssetGenImage get eg => const AssetGenImage('assets/images/EG.png');
@@ -83,6 +103,10 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/LR.png
   AssetGenImage get lr => const AssetGenImage('assets/images/LR.png');
+
+  /// File path: assets/images/Watch Now.png
+  AssetGenImage get watchNow =>
+      const AssetGenImage('assets/images/Watch Now.png');
 
   /// File path: assets/images/gamer (1) (1).png
   AssetGenImage get gamer11 =>
@@ -120,14 +144,85 @@ class $AssetsImagesGen {
   AssetGenImage get gamer1 =>
       const AssetGenImage('assets/images/gamer (1).png');
 
+  /// File path: assets/images/home1.png
+  AssetGenImage get home1 => const AssetGenImage('assets/images/home1.png');
+
+  /// File path: assets/images/home10.png
+  AssetGenImage get home10 => const AssetGenImage('assets/images/home10.png');
+
+  /// File path: assets/images/home11.png
+  AssetGenImage get home11 => const AssetGenImage('assets/images/home11.png');
+
+  /// File path: assets/images/home2.png
+  AssetGenImage get home2 => const AssetGenImage('assets/images/home2.png');
+
+  /// File path: assets/images/home3.png
+  AssetGenImage get home3 => const AssetGenImage('assets/images/home3.png');
+
+  /// File path: assets/images/home4.png
+  AssetGenImage get home4 => const AssetGenImage('assets/images/home4.png');
+
+  /// File path: assets/images/home5.png
+  AssetGenImage get home5 => const AssetGenImage('assets/images/home5.png');
+
+  /// File path: assets/images/home6.png
+  AssetGenImage get home6 => const AssetGenImage('assets/images/home6.png');
+
+  /// File path: assets/images/home7.png
+  AssetGenImage get home7 => const AssetGenImage('assets/images/home7.png');
+
+  /// File path: assets/images/home8.png
+  AssetGenImage get home8 => const AssetGenImage('assets/images/home8.png');
+
+  /// File path: assets/images/home9.png
+  AssetGenImage get home9 => const AssetGenImage('assets/images/home9.png');
+
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
+  /// File path: assets/images/onpording_five.png
+  AssetGenImage get onpordingFive =>
+      const AssetGenImage('assets/images/onpording_five.png');
+
+  /// File path: assets/images/onpording_one.png
+  AssetGenImage get onpordingOne =>
+      const AssetGenImage('assets/images/onpording_one.png');
+
+  /// File path: assets/images/onpording_six.png
+  AssetGenImage get onpordingSix =>
+      const AssetGenImage('assets/images/onpording_six.png');
+
+  /// File path: assets/images/onpording_two.png
+  AssetGenImage get onpordingTwo =>
+      const AssetGenImage('assets/images/onpording_two.png');
+
+  /// File path: assets/images/onporging_four.png
+  AssetGenImage get onporgingFour =>
+      const AssetGenImage('assets/images/onporging_four.png');
+
+  /// File path: assets/images/onporging_three.png
+  AssetGenImage get onporgingThree =>
+      const AssetGenImage('assets/images/onporging_three.png');
+
+  /// File path: assets/images/playmovie.png
+  AssetGenImage get playmovie =>
+      const AssetGenImage('assets/images/playmovie.png');
+
+  /// File path: assets/images/splash_route.png
+  AssetGenImage get splashRoute =>
+      const AssetGenImage('assets/images/splash_route.png');
+
+  /// File path: assets/images/splash_screen.png
+  AssetGenImage get splashScreen =>
+      const AssetGenImage('assets/images/splash_screen.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
+    availableNow,
     eg,
     forgotPasswordBro1,
     lr,
+    watchNow,
     gamer11,
     gamer12,
     gamer13,
@@ -137,7 +232,27 @@ class $AssetsImagesGen {
     gamer17,
     gamer18,
     gamer1,
+    home1,
+    home10,
+    home11,
+    home2,
+    home3,
+    home4,
+    home5,
+    home6,
+    home7,
+    home8,
+    home9,
     logo,
+    onpordingFive,
+    onpordingOne,
+    onpordingSix,
+    onpordingTwo,
+    onporgingFour,
+    onporgingThree,
+    playmovie,
+    splashRoute,
+    splashScreen,
   ];
 }
 

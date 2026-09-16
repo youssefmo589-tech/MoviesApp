@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../core/app_theme_manager/app_colors.dart';
+import '../modules/movie_details_feature/domain/entities/cast_entity.dart';
 
 class MovieDetailsContainer extends StatelessWidget {
-  final String name;
+  final CastEntity cast;
 
-  final String charachter;
+  const MovieDetailsContainer({super.key, required this.cast});
 
-  final String image;
-
-  MovieDetailsContainer({
-    super.key,
-    required this.name,
-    required this.charachter,
-    required this.image,
-  });
-
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
 
@@ -37,30 +30,33 @@ class MovieDetailsContainer extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
-                  image: AssetImage(image),
+                  image: NetworkImage(cast.image),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-            Column(
-              spacing: 11,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Name : $name",
-                  style: theme.titleSmall?.copyWith(
-                    color: AppColors.white,
-                    fontSize: 20,
+            Expanded(
+              child: Column(
+                spacing: 11,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Name : ${cast.name}",
+                    style: theme.titleSmall?.copyWith(
+                      color: AppColors.white,
+                      fontSize: 20,
+                    ),
                   ),
-                ),
-                Text(
-                  "Charachter : $charachter",
-                  style: theme.titleSmall?.copyWith(
-                    color: AppColors.white,
-                    fontSize: 20,
+                  Text(
+                    "Character : ${cast.characterName}",
+                    maxLines: 2,
+                    style: theme.titleSmall?.copyWith(
+                      color: AppColors.white,
+                      fontSize: 20,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import '../core/app_theme_manager/app_colors.dart';
 
 class ArrowBackWidget extends StatelessWidget {
-  const ArrowBackWidget({super.key});
+  final Color color;
+  const ArrowBackWidget({super.key, this.color = AppColors.yellow});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
+    return IconButton(
+      onPressed: () {
         Navigator.pop(context);
       },
-      child: Icon(Icons.arrow_back, color: AppColors.yellow, size: 24),
+      icon: Icon(Icons.arrow_back, color: color, size: 24),
     );
   }
 }

@@ -13,4 +13,6 @@ abstract class AppRouteName {
 
   static const String Editprofile = '/EditProfile';
   static const String profile = '/Profile';
+
+  static const String MovieDetails = '/MovieDetails';
 }

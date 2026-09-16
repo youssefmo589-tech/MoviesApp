@@ -11,6 +11,11 @@ import '../../modules/layoutviewFeature/presentation/manager/editProfileBloc.dar
 import '../../modules/layoutviewFeature/presentation/manager/profile_bloc.dart';
 import '../../modules/layoutviewFeature/presentation/pages/home/home_screen.dart';
 import '../../modules/layoutviewFeature/presentation/pages/profile/presentation/Editprofile_screen.dart';
+import '../../modules/movie_details_feature/data/data_source/movie_details_data_source.dart';
+import '../../modules/movie_details_feature/data/repository_imp/movie_details_repo_imp.dart';
+import '../../modules/movie_details_feature/domain/use_cases/get_movie_details_use_case.dart';
+import '../../modules/movie_details_feature/presentation/manager/movie_details_bloc.dart';
+import '../../modules/movie_details_feature/presentation/pages/MovieDetails.dart';
 import '../../modules/onboarding/on_boarding_screen.dart';
 import '../../modules/splash/splash_screen.dart';
 import 'app_route_name.dart';
@@ -20,6 +25,19 @@ abstract class AppConfig {
     switch (settings.name) {
       case AppRouteName.initial:
         return MaterialPageRoute(builder: (context) => SplashScreen());
+
+      case AppRouteName.MovieDetails:
+        final movieId = settings.arguments as int? ?? 77555;
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider<MovieDetailsBloc>(
+            create: (context) => MovieDetailsBloc(
+              getMoviesDetailsUseCase: GetMovieDetailsUseCase(
+                MovieDetailsRepoImp(MovieDetailsDataSource()),
+              ),
+            ),
+            child: MovieDetails(movieId: movieId),
+          ),
+        );
 
       case AppRouteName.onBoarding:
         return MaterialPageRoute(builder: (context) => OnBoardingScreen());

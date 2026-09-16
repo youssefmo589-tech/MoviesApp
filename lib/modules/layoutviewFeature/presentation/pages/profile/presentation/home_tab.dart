@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/core/app_routes/app_route_name.dart';
 import 'package:movieapp/core/app_theme_manager/app_colors.dart';
 import 'package:movieapp/modules/layoutviewFeature/presentation/manager/home_bloc.dart';
+import 'package:movieapp/modules/layoutviewFeature/presentation/pages/home/home_screen.dart';
 import '../../../../datalayer/datasources/movie_remote_data_source.dart';
 import '../../../../datalayer/repositoryImp/movie_repository_impl.dart';
 import '../../../../domain/usecases/get_movies_usecase.dart';
-
 
 class HomeTab extends StatelessWidget {
   const HomeTab({Key? key}) : super(key: key);
@@ -169,7 +169,9 @@ class _HomeViewState extends State<HomeView> {
                                 ),
                               ),
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  context.findAncestorStateOfType<MainLayoutViewState>()?.changeTab(2);
+                                },
                                 child: const Row(
                                   children: [
                                     Text(

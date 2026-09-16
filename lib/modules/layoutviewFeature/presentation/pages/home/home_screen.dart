@@ -8,7 +8,6 @@ import 'package:movieapp/modules/layoutviewFeature/presentation/pages/home/prese
 import 'package:movieapp/modules/layoutviewFeature/presentation/pages/home/presentation/tabs/profile_tab/profile_tab.dart';
 import 'package:movieapp/modules/layoutviewFeature/presentation/pages/home/presentation/tabs/search_tab/search_tab.dart';
 import 'package:movieapp/modules/layoutviewFeature/datalayer/datasources/profile_local_data_source.dart';
-import 'package:movieapp/modules/layoutviewFeature/presentation/manager/editProfileBloc.dart';
 
 import '../../manager/home_bloc.dart';
 import '../../manager/profile_bloc.dart';
@@ -46,10 +45,10 @@ class MainLayoutView extends StatefulWidget {
   const MainLayoutView({super.key});
 
   @override
-  State<MainLayoutView> createState() => _MainLayoutViewState();
+  State<MainLayoutView> createState() => MainLayoutViewState();
 }
 
-class _MainLayoutViewState extends State<MainLayoutView> {
+class MainLayoutViewState extends State<MainLayoutView> {
   int _selectedTabIndex = 0;
 
   final List<Widget> _tabs = const [
@@ -58,6 +57,12 @@ class _MainLayoutViewState extends State<MainLayoutView> {
     BrowseTab(),
     ProfileTab(),
   ];
+
+  void changeTab(int index) {
+    setState(() {
+      _selectedTabIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -319,7 +324,9 @@ class _HomeViewState extends State<HomeView> {
                                 ),
                               ),
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  context.findAncestorStateOfType<MainLayoutViewState>()?.changeTab(2);
+                                },
                                 child: const Row(
                                   children: [
                                     Text(

@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:movieapp/core/app_routes/app_route_config.dart';
 import 'package:movieapp/core/app_routes/app_route_name.dart';
 import 'core/app_theme_manager/app_theme_manager.dart';

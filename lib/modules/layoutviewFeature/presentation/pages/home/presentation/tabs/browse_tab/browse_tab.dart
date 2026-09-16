@@ -123,22 +123,22 @@ class BrowseBody extends StatelessWidget {
                         ),
                       );
                     }
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, AppRouteName.MovieDetails);
-                      },
-                      child: GridView.builder(
-                        itemCount: state.movies.length,
-                        physics: const BouncingScrollPhysics(),
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.68,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
-                        ),
-                        itemBuilder: (context, index) {
-                          final movie = state.movies[index];
-                          return ClipRRect(
+                    return GridView.builder(
+                      itemCount: state.movies.length,
+                      physics: const BouncingScrollPhysics(),
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.68,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                      ),
+                      itemBuilder: (context, index) {
+                        final movie = state.movies[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, AppRouteName.MovieDetails, arguments: movie.id);
+                          },
+                          child: ClipRRect(
                             borderRadius: BorderRadius.circular(16),
                             child: Stack(
                               children: [
@@ -192,9 +192,9 @@ class BrowseBody extends StatelessWidget {
                                 ),
                               ],
                             ),
-                          );
-                        },
-                      ),
+                          ),
+                        );
+                      },
                     );
                   }
 

@@ -23,6 +23,7 @@ import 'app_route_name.dart';
 abstract class AppConfig {
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
+
       case AppRouteName.initial:
         return MaterialPageRoute(builder: (context) => SplashScreen());
 

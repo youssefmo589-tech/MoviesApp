@@ -14,6 +14,7 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   int currentIndex = 0;
   late List<String> randomGenres;
+  String? selectedGenre;
 
   @override
   void initState() {
@@ -23,6 +24,7 @@ class _HomeTabState extends State<HomeTab> {
 
   void _loadTabContent() {
     randomGenres = GenreHelper.getRandomGenres(count: 3);
+    selectedGenre = randomGenres.isNotEmpty ? randomGenres.first : null;
 
     final homeBloc = context.read<HomeBloc>();
 
@@ -183,11 +185,45 @@ class _HomeTabState extends State<HomeTab> {
               ],
             ),
 
+            if (randomGenres.isNotEmpty)
+              Container(
+                height: 40,
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: randomGenres.length,
+                  itemBuilder: (context, index) {
+                    final genre = randomGenres[index];
+                    final isSelected = selectedGenre == genre;
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: ChoiceChip(
+                        label: Text(genre),
+                        selected: isSelected,
+                        selectedColor: const Color(0xFFFFB224),
+                        backgroundColor: Colors.grey[900],
+                        labelStyle: TextStyle(
+                          color: isSelected ? Colors.black : Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        onSelected: (selected) {
+                          setState(() {
+                            selectedGenre = genre;
+                          });
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+            const SizedBox(height: 10),
+
             Container(
               color: AppColors.black,
-              child: Column(
-                children: randomGenres.map((genre) => _buildGenreSection(genre)).toList(),
-              ),
+              child: selectedGenre != null
+                  ? _buildGenreSection(selectedGenre!)
+                  : const SizedBox.shrink(),
             ),
             const SizedBox(height: 30),
           ],

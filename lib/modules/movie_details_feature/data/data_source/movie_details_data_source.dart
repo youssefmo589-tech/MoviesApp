@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 
 import '../models/movie_details_model.dart';
@@ -19,6 +21,29 @@ class MovieDetailsDataSource {
 
     } catch (e) {
       throw Exception('Failed to load movie details: $e');
+    }
+  }
+
+  Future<List<MovieDetailsModel>> getSimilarMovies(int id) async
+  {
+    try {
+      final response = await dio.get(
+          "https://yts.gg/api/v2/movie_suggestions.json",
+          queryParameters: {
+            "movie_id": id,
+          });
+
+      final data = response.data['data']['movies'];
+
+      List<MovieDetailsModel>movies = [];
+
+      for (var movie in data) {
+        movies.add(MovieDetailsModel.fromJson(movie));
+      }
+
+      return movies;
+    } catch (error) {
+      throw Exception("Failed to load suggestions movies: $error");
     }
   }
 }

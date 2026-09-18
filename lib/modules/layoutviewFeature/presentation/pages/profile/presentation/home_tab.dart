@@ -191,7 +191,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                                 onTap: () {
                                   context.findAncestorStateOfType<MainLayoutViewState>()?.changeTab(2);
                                 },
-                                child: const Row(
+                                child: Row(
                                   children: [
                                     Text(
                                       'See More',

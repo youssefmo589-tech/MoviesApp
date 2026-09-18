@@ -185,7 +185,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 8),
+                            SizedBox(height: 16),
                             Text(
                               "Similar",
                               style: theme.titleLarge?.copyWith(
@@ -194,10 +194,11 @@ class _MovieDetailsState extends State<MovieDetails> {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
+                            SizedBox(height: 10),
 
                             /////////////++Suggestions++////////////////
-
                             GridView.builder(
+                              padding: EdgeInsets.zero,
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: similarmovies.length,
@@ -277,6 +278,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                                 );
                               },
                             ),
+                            SizedBox(height: 16),
 
                             Text(
                               "Summary",
@@ -286,7 +288,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            SizedBox(height: 16),
+                            SizedBox(height: 10),
                             Text(
                               movie.summary,
                               style: theme.titleSmall?.copyWith(

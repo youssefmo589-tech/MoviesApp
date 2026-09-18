@@ -15,6 +15,7 @@ class MovieDetailsModel extends MovieDetailsEntity {
     required super.summary,
     required super.cast,
     required super.genres,
+    required super.url,
   });
 
   factory MovieDetailsModel.fromJson(Map<String, dynamic> movie) {
@@ -50,6 +51,7 @@ class MovieDetailsModel extends MovieDetailsEntity {
       summary: movie['summary'] as String? ?? movie['description_full'] as String? ?? '',
       cast: castList,
       genres: List<String>.from(movie['genres'] as List<dynamic>? ?? []),
+      url: movie['url'] as String? ?? '',
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:movieapp/modules/movie_details_feature/presentation/manager/movi
 import 'package:movieapp/widgets/GenresContainer.dart';
 import 'package:movieapp/widgets/arrow_back_widget.dart';
 import 'package:movieapp/widgets/button_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/app_routes/app_route_name.dart';
 import '../../../../core/app_theme_manager/app_colors.dart';
@@ -99,7 +100,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                           Positioned.fill(
                             child: GestureDetector(
                               onTap: () {
-                                Navigator.pop(context);
+                                return _launchURL(movie.url);
                               },
                               child: Center(
                                 child: Image.asset(
@@ -145,6 +146,9 @@ class _MovieDetailsState extends State<MovieDetails> {
                               title: "Watch",
                               buttoncolor: AppColors.red,
                               titlecolor: AppColors.white,
+                              onTap: () {
+                                return _launchURL(movie.url);
+                              },
                             ),
                             SizedBox(height: 16),
                             Row(
@@ -370,5 +374,11 @@ class _MovieDetailsState extends State<MovieDetails> {
         },
       ),
     );
+  }
+  void _launchURL(String url) async {
+    final launch = await launchUrl(Uri.parse(url), mode: LaunchMode.platformDefault);
+    if (!launch) {
+      throw Exception('Could not launch $url');
+    }
   }
 }

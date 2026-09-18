@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movieapp/modules/movie_details_feature/domain/entities/movie_details_entity.dart';
 import 'package:movieapp/modules/movie_details_feature/presentation/manager/movie_details_state.dart';
 import 'package:movieapp/widgets/GenresContainer.dart';
 import 'package:movieapp/widgets/arrow_back_widget.dart';
@@ -23,11 +22,6 @@ class MovieDetails extends StatefulWidget {
 }
 
 class _MovieDetailsState extends State<MovieDetails> {
-  late final MovieDetailsEntity movie;
-
-  late final List<MovieDetailsEntity> similarmovies;
-
-
   @override
   void initState() {
     super.initState();
@@ -76,8 +70,8 @@ class _MovieDetailsState extends State<MovieDetails> {
           }
 
           if (state is MovieSuccess) {
-            movie = state.movieDetails;
-            similarmovies = state.similarmovies;
+            final movie = state.movieDetails;
+            final similarmovies = state.similarmovies;
 
             return Stack(
               children: [
@@ -181,7 +175,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                               ),
                             ),
                             ...movie.screenShots.map(
-                              (e) => Padding(
+                                  (e) => Padding(
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 7.0,
                                 ),
@@ -206,7 +200,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                             GridView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: state.similarmovies.length,
+                              itemCount: similarmovies.length,
                               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
                                 childAspectRatio: 0.68,
@@ -214,12 +208,12 @@ class _MovieDetailsState extends State<MovieDetails> {
                                 mainAxisSpacing: 12,
                               ),
                               itemBuilder: (context, index) {
-                                final movie = state.similarmovies[index];
+                                final suggestedMovie = similarmovies[index];
                                 return GestureDetector(
                                   onTap: () {
                                     Navigator.pushNamed(
                                         context, AppRouteName.MovieDetails,
-                                        arguments: movie.id);
+                                        arguments: suggestedMovie.id);
                                   },
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(16),
@@ -227,9 +221,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                                       children: [
                                         Positioned.fill(
                                           child: Image.network(
-                                            similarmovies[index]
-                                                .mediumCoverImage ?? '',
-                                            ////////////////
+                                            suggestedMovie.imageLarge,
                                             fit: BoxFit.cover,
                                             errorBuilder: (context, error,
                                                 stackTrace) {
@@ -261,8 +253,8 @@ class _MovieDetailsState extends State<MovieDetails> {
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
                                                 Text(
-                                                  movie.rating?.toString() ??
-                                                      '0.0',
+                                                  suggestedMovie.rating
+                                                      .toString(),
                                                   style: const TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 12,
@@ -324,7 +316,6 @@ class _MovieDetailsState extends State<MovieDetails> {
                               separatorBuilder: (context, index) {
                                 return SizedBox(height: 8);
                               },
-
                               itemCount: movie.cast.length,
                             ),
                             SizedBox(height: 16),
@@ -342,12 +333,12 @@ class _MovieDetailsState extends State<MovieDetails> {
                               physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    mainAxisSpacing: 16,
-                                    crossAxisSpacing: 11,
-                                    mainAxisExtent: 36,
-                                  ),
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                mainAxisSpacing: 16,
+                                crossAxisSpacing: 11,
+                                mainAxisExtent: 36,
+                              ),
                               itemBuilder: (Context, index) {
                                 return GenresContainer(
                                   title: movie.genres[index],

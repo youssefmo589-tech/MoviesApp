@@ -13,31 +13,25 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
   final GetMovieDetailsUseCase getMoviesDetailsUseCase;
 
   late MovieDetailsRepoImp _movieDetailsRepoImp;
-
   late MovieDetailsDataSource _movieDetailsDataSource;
-
   late GetSimilarMoviesUsecase _getSimilarMoviesUsecase;
 
   MovieDetailsBloc({required this.getMoviesDetailsUseCase}) : super(MovieInitial()) {
     on<MovieSelectedEvent>(_onMovieDetails);
   }
 
-  Future<void> _onMovieDetails(MovieSelectedEvent event,
-      Emitter<MovieDetailsState> emit) async {
+  Future<void> _onMovieDetails(
+      MovieSelectedEvent event, Emitter<MovieDetailsState> emit) async {
     emit(MovieLoading());
 
-
     _movieDetailsDataSource = MovieDetailsDataSource();
-
     _movieDetailsRepoImp = MovieDetailsRepoImp(_movieDetailsDataSource);
-
     _getSimilarMoviesUsecase =
         GetSimilarMoviesUsecase(moviedetailsrepo: _movieDetailsRepoImp);
 
-
     try {
-      final movieDetails = await getMoviesDetailsUseCase.getMovieDetails(
-          event.id);
+      final movieDetails =
+      await getMoviesDetailsUseCase.getMovieDetails(event.id);
       final similarmovies = await _getSimilarMoviesUsecase.call(event.id);
       emit(MovieSuccess(
           movieDetails: movieDetails, similarmovies: similarmovies));
@@ -46,5 +40,4 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
           'Failed to fetch movie details. Please check your internet connection.'));
     }
   }
-
 }

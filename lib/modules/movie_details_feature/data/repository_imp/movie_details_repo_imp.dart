@@ -11,4 +11,9 @@ class MovieDetailsRepoImp implements MovieDetailsRepo {
     final movieDetailsModel = await dataSource.getMovieDetails(id);
     return movieDetailsModel;
   }
+
+  @override
+  Future<List<MovieDetailsEntity>> getSimilarMovies(int id) async {
+    return await dataSource.getSimilarMovies(id);
+  }
 }

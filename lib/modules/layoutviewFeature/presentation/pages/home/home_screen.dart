@@ -13,7 +13,6 @@ import '../../manager/home_bloc.dart';
 import '../../manager/profile_bloc.dart';
 import '../profile/presentation/home_tab.dart';
 
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -64,40 +63,101 @@ class MainLayoutViewState extends State<MainLayoutView> {
     });
   }
 
+  Widget _buildNavItem({
+    required int index,
+    required String iconPath,
+    required String activeIconPath,
+    required IconData fallbackIcon,
+    required double iconSize,
+  }) {
+    bool isSelected = _selectedTabIndex == index;
+    String targetPath = isSelected ? activeIconPath : iconPath;
+
+    return Expanded(
+      child: GestureDetector(
+        onTap: () => changeTab(index),
+        behavior: HitTestBehavior.opaque,
+        child: Center(
+          child: targetPath.isNotEmpty
+              ? Image.asset(
+            targetPath,
+            width: iconSize,
+            height: iconSize,
+            fit: BoxFit.contain,
+            errorBuilder: (context, error, stackTrace) => Icon(
+              fallbackIcon,
+              color: isSelected ? const Color(0xFFFFB224) : Colors.white60,
+              size: iconSize,
+            ),
+          )
+              : Icon(
+            fallbackIcon,
+            color: isSelected ? const Color(0xFFFFB224) : Colors.white60,
+            size: iconSize,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final screenWidth = mediaQuery.size.width;
+    final screenHeight = mediaQuery.size.height;
+
+    final horizontalMargin = screenWidth * 0.03;
+    final barHeight = screenHeight * 0.075;
+    final clampedHeight = barHeight.clamp(56.0, 70.0);
+    final iconSize = (clampedHeight * 0.38).clamp(20.0, 28.0);
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: _tabs[_selectedTabIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedTabIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedTabIndex = index;
-          });
-        },
-        backgroundColor: const Color(0xFF1A1A1A),
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: const Color(0xFFFFB224),
-        unselectedItemColor: Colors.white60,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.movie_creation_outlined),
-            label: 'Browse',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
+      bottomNavigationBar: Container(
+        margin: EdgeInsets.only(
+          left: horizontalMargin,
+          right: horizontalMargin,
+          bottom: mediaQuery.padding.bottom > 0 ? mediaQuery.padding.bottom : 12,
+        ),
+        height: clampedHeight,
+        decoration: BoxDecoration(
+          color: const Color(0xFF282A28),
+          borderRadius: BorderRadius.circular(clampedHeight * 0.26),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _buildNavItem(
+              index: 0,
+              iconPath: 'assets/icons/home.png',
+              activeIconPath: 'assets/icons/home1.png',
+              fallbackIcon: Icons.home,
+              iconSize: iconSize,
+            ),
+            _buildNavItem(
+              index: 1,
+              iconPath: 'assets/icons/search.png',
+              activeIconPath: 'assets/icons/search1.png',
+              fallbackIcon: Icons.search,
+              iconSize: iconSize,
+            ),
+            _buildNavItem(
+              index: 2,
+              iconPath: 'assets/icons/explore.png',
+              activeIconPath: 'assets/icons/explore1.png',
+              fallbackIcon: Icons.explore,
+              iconSize: iconSize,
+            ),
+            _buildNavItem(
+              index: 3,
+              iconPath: 'assets/icons/Profile.png',
+              activeIconPath: 'assets/icons/Profile1.png',
+              fallbackIcon: Icons.person,
+              iconSize: iconSize,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -131,7 +191,7 @@ class _HomeViewState extends State<HomeView> {
                 style: const TextStyle(color: Colors.white),
               ),
             );
-          } if (state is HomeLoaded) {
+          } else if (state is HomeLoaded) {
             final movies = state.movies;
             if (movies.isEmpty) {
               return const Center(
@@ -164,10 +224,14 @@ class _HomeViewState extends State<HomeView> {
                             ).createShader(rect);
                           },
                           blendMode: BlendMode.dstIn,
-                          child: Image.network(
-                            movies[currentIndex].mediumCoverImage ?? '',
+                          child: (movies[currentIndex].mediumCoverImage != null &&
+                              movies[currentIndex].mediumCoverImage!.isNotEmpty)
+                              ? Image.network(
+                            movies[currentIndex].mediumCoverImage!,
                             fit: BoxFit.cover,
-                          ),
+                            errorBuilder: (context, error, stackTrace) => Container(color: Colors.grey[900]),
+                          )
+                              : Container(color: Colors.grey[900]),
                         ),
                       ),
                       Positioned.fill(
@@ -185,8 +249,7 @@ class _HomeViewState extends State<HomeView> {
                               width: 267,
                               height: 93,
                               fit: BoxFit.contain,
-                              errorBuilder: (context, error, stackTrace) =>
-                              const Text(
+                              errorBuilder: (context, error, stackTrace) => const Text(
                                 'Available Now',
                                 style: TextStyle(
                                   color: Colors.white,
@@ -211,6 +274,7 @@ class _HomeViewState extends State<HomeView> {
                               },
                               itemBuilder: (context, index) {
                                 bool isCurrent = currentIndex == index;
+                                final imageUrl = movies[index].mediumCoverImage ?? '';
                                 return GestureDetector(
                                   onTap: () {},
                                   child: AnimatedScale(
@@ -221,14 +285,14 @@ class _HomeViewState extends State<HomeView> {
                                     child: Container(
                                       width: 234,
                                       decoration: BoxDecoration(
-                                        borderRadius:
-                                        BorderRadius.circular(16),
-                                        image: DecorationImage(
-                                          image: NetworkImage(
-                                            movies[index].mediumCoverImage ?? '',
-                                          ),
+                                        borderRadius: BorderRadius.circular(16),
+                                        color: Colors.grey[850],
+                                        image: imageUrl.isNotEmpty
+                                            ? DecorationImage(
+                                          image: NetworkImage(imageUrl),
                                           fit: BoxFit.cover,
-                                        ),
+                                        )
+                                            : null,
                                       ),
                                     ),
                                   ),
@@ -243,8 +307,7 @@ class _HomeViewState extends State<HomeView> {
                               width: 354,
                               height: 146,
                               fit: BoxFit.contain,
-                              errorBuilder: (context, error, stackTrace) =>
-                              const Text(
+                              errorBuilder: (context, error, stackTrace) => const Text(
                                 'Watch Now',
                                 style: TextStyle(
                                   color: Colors.white,
@@ -358,6 +421,7 @@ class _HomeViewState extends State<HomeView> {
                             ),
                             itemCount: movies.length,
                             itemBuilder: (context, index) {
+                              final imageUrl = movies[index].mediumCoverImage ?? '';
                               return GestureDetector(
                                 onTap: () {},
                                 child: Container(
@@ -365,12 +429,13 @@ class _HomeViewState extends State<HomeView> {
                                   margin: const EdgeInsets.only(right: 12),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12),
-                                    image: DecorationImage(
-                                      image: NetworkImage(
-                                        movies[index].mediumCoverImage ?? '',
-                                      ),
+                                    color: Colors.grey[850],
+                                    image: imageUrl.isNotEmpty
+                                        ? DecorationImage(
+                                      image: NetworkImage(imageUrl),
                                       fit: BoxFit.cover,
-                                    ),
+                                    )
+                                        : null,
                                   ),
                                 ),
                               );

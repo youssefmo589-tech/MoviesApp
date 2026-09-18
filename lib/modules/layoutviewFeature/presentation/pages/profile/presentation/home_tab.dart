@@ -33,8 +33,27 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   int currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    BlocProvider.of<HomeBloc>(context).add(RefreshHomeCategoriesEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,12 +176,12 @@ class _HomeViewState extends State<HomeView> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Row(
+                          child:  Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                'Action',
-                                style: TextStyle(
+                              Text(
+                                state.currentCategory,
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,

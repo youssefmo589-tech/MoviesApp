@@ -15,11 +15,10 @@ class MovieDetailsModel extends MovieDetailsEntity {
     required super.summary,
     required super.cast,
     required super.genres,
+    required super.url,
   });
-  factory MovieDetailsModel.fromJson(Map<String, dynamic> json) {
 
-    final movie = json['data']['movie'] as Map<String, dynamic>;
-
+  factory MovieDetailsModel.fromJson(Map<String, dynamic> movie) {
     final screenshots = <String>[
       if (movie['large_screenshot_image1'] != null) movie['large_screenshot_image1'] as String,
       if (movie['large_screenshot_image2'] != null) movie['large_screenshot_image2'] as String,
@@ -28,18 +27,21 @@ class MovieDetailsModel extends MovieDetailsEntity {
 
     final castList = (movie['cast'] as List<dynamic>? ?? [])
         .map((castMember) {
-          final c = castMember as Map<String, dynamic>;
-          return CastEntity(
-            name: c['name'] ,
-            characterName: c['character_name'] as String? ?? '',
-            image: c['url_small_image'] ,
-          );
+      final c = castMember as Map<String, dynamic>;
+      return CastEntity(
+        name: c['name'],
+        characterName: c['character_name'] as String? ?? '',
+        image: c['url_small_image'],
+      );
     })
         .toList();
-/////////////////////////////////// ++Important++ \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
     return MovieDetailsModel(
       id: movie['id'] as int,
-      imageLarge: movie['large_cover_image'] as String? ?? '',
+      imageLarge: movie['large_cover_image'] as String? ??
+          movie['medium_cover_image'] as String? ??
+          movie['small_cover_image'] as String? ??
+          '',
       name: movie['title'] as String? ?? '',
       year: movie['year'] as int? ?? 0,
       likes: movie['like_count'] as int? ?? 0,
@@ -49,6 +51,7 @@ class MovieDetailsModel extends MovieDetailsEntity {
       summary: movie['summary'] as String? ?? movie['description_full'] as String? ?? '',
       cast: castList,
       genres: List<String>.from(movie['genres'] as List<dynamic>? ?? []),
+      url: movie['url'] as String? ?? '',
     );
   }
 }

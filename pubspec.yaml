@@ -29,6 +29,7 @@ dependencies:
   flutter_bloc: ^9.1.1
   dio: ^5.11.1
   shared_preferences: ^2.5.5
+  url_launcher: ^6.3.2
 
 flutter_gen:
   output: lib/core/gen/ # Optional (default: lib/gen/)

@@ -12,6 +12,7 @@ class MovieDetailsEntity {
   final String summary;
   final List<CastEntity> cast;
   final List<String> genres;
+  final String url;
 
   MovieDetailsEntity({
     required this.id,
@@ -25,5 +26,6 @@ class MovieDetailsEntity {
     required this.summary,
     required this.cast,
     required this.genres,
+    required this.url,
   });
 }

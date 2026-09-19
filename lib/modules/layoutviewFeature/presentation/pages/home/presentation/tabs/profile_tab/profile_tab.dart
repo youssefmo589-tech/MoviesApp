@@ -9,7 +9,7 @@ import '../../../../../../../../core/app_routes/app_route_name.dart';
 import '../../../../../../datalayer/Models/UserModel.dart';
 import '../../../../../manager/profile_bloc.dart';
 import '../../../../../manager/profile_state.dart';
-//Exit
+
 class ProfileTab extends StatefulWidget {
   const ProfileTab({Key? key}) : super(key: key);
 
@@ -21,7 +21,7 @@ class _ProfileTabState extends State<ProfileTab> with SingleTickerProviderStateM
   late TabController _tabController;
   TextEditingController nameController = TextEditingController();
   TextEditingController imageController = TextEditingController();
-  UserModel ? currentuser;
+  UserModel? currentuser;
 
   @override
   void initState() {
@@ -40,7 +40,6 @@ class _ProfileTabState extends State<ProfileTab> with SingleTickerProviderStateM
         nameController.text = currentuser?.name ?? "";
         imageController.text = currentuser?.image ?? "";
       });
-
     }
   }
 
@@ -86,6 +85,7 @@ class _ProfileTabState extends State<ProfileTab> with SingleTickerProviderStateM
                             backgroundColor: Colors.transparent,
                             backgroundImage: AssetImage(imageController.text),
                           ),
+                          const SizedBox(height: 15),
                           Text(
                             nameController.text,
                             style: TextStyle(
@@ -94,7 +94,6 @@ class _ProfileTabState extends State<ProfileTab> with SingleTickerProviderStateM
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-
                         ],
                       ),
                       const SizedBox(width: 24),
@@ -130,7 +129,7 @@ class _ProfileTabState extends State<ProfileTab> with SingleTickerProviderStateM
                             ),
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context, AppRouteName.Editprofile,);
+                            Navigator.pushNamed(context, AppRouteName.Editprofile);
                           },
                           child: const Text(
                             "Edit Profile",
@@ -148,7 +147,7 @@ class _ProfileTabState extends State<ProfileTab> with SingleTickerProviderStateM
                           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                         ),
                         onPressed: () {
-                          Navigator.pushReplacementNamed(context, AppRouteName.login,);
+                          Navigator.pushReplacementNamed(context, AppRouteName.login);
                         },
                         child: const Row(
                           children: [

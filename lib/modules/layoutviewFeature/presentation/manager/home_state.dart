@@ -8,7 +8,10 @@ class HomeLoading extends HomeState {}
 
 class HomeLoaded extends HomeState {
   final List movies;
-  HomeLoaded(this.movies);
+
+  final String currentCategory;
+
+  HomeLoaded(this.movies, {this.currentCategory = 'Action'});
 }
 
 class HomeError extends HomeState {

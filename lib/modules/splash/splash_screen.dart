@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/SharedPrefService/SharedPrefService.dart';
 import '../../core/app_routes/app_route_name.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -15,10 +17,32 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () {
+    initializeSplash();
+  }
+
+  Future<void> initializeSplash() async
+  {
+    await checkOnBoarding();
+  }
+
+  Future<void> checkOnBoarding() async
+  {
+    final user = FirebaseAuth.instance.currentUser;
+    final isseen = await SharedPrefService.getPref();
+    if (isseen) {
+      if (user != null) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, AppRouteName.home, (route) => false);
+      }
+      else {
+        Navigator.pushNamedAndRemoveUntil(
+            context, AppRouteName.login, (route) => false);
+      }
+    }
+    else {
       Navigator.pushNamedAndRemoveUntil(
-          context, AppRouteName.login, (route) => false);
-    });
+          context, AppRouteName.onBoarding, (route) => false);
+    }
   }
 
   @override

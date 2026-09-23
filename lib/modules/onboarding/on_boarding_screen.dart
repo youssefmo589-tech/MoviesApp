@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../core/SharedPrefService/SharedPrefService.dart';
 import '../../core/app_routes/app_route_name.dart';
 import 'on_boarding_data.dart';
 
@@ -149,6 +150,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                     ),
                                   ),
                                   onPressed: () {
+                                    SharedPrefService.setPref();
                                     if (currentIndex <
                                         onboardingItems.length - 1) {
                                       _pageController.nextPage(

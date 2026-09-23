@@ -7,5 +7,7 @@ abstract class AuthDataSourceInterface {
 
   Future<void> forgetPassword(String email);
 
+  Future<UserCredential?> signinwithgoogle();
+
   User? get currentUser;
 }

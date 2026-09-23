@@ -44,3 +44,29 @@ class ForgetPasswordRequested extends AuthEvent {
   @override
   List<Object?> get props => [email];
 }
+
+class SignInWithGoogleEvent extends AuthEvent {
+  const SignInWithGoogleEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CompleteGoogleRegistrationRequested extends AuthEvent {
+  final String uid;
+
+  final String name;
+
+  final String email;
+
+  final String phone;
+
+  final int avatarIndex;
+
+  const CompleteGoogleRegistrationRequested(
+      {required this.uid, required this.name, required this.email, required this.phone, required this.avatarIndex});
+
+  @override
+  List<Object?> get props => [uid, name, email, phone, avatarIndex];
+}
+

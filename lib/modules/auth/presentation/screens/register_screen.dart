@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movieapp/modules/auth/domain/entity/user_entity.dart';
 
 import '../../../../core/Services/BotToastservice.dart';
 import '../../../../core/app_routes/app_route_name.dart';
@@ -40,6 +41,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
+
   void _submit(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       context.read<AuthBloc>().add(
@@ -56,145 +58,191 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context).textTheme;
-    return Scaffold(
-      appBar: AppBar(
-        leading: ArrowBackWidget(),
-        title: Text(
-          "Register",
-          style: theme.bodyLarge?.copyWith(color: AppColors.yellow),
-        ),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: SingleChildScrollView(
-          child: BlocConsumer<AuthBloc, AuthState>(
-            listener: (context, state) {
-              if (state is AuthFailure) {
-                AppSnackBar.error(state.message);
-              } else if (state is AuthSuccess) {
-                AppSnackBar.success("Account created! Please log in.");
-                Navigator.pushNamedAndRemoveUntil(
-                    context, AppRouteName.login, (route) => false);
-              }
-            },
-            builder: (context, state) {
-              final isLoading = state is AuthLoading;
-              return Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    AvatarsCarouselSliderWidget(onAvatarSelected: (int value) {
-                      setState(() {
-                        _selectedAvatarIndex = value;
-                      });
-                    },
-                    selectedIndex: _selectedAvatarIndex,),
-                    SizedBox(height: 10),
-                    Center(child: Text("Avatar")),
-                    SizedBox(height: 12),
-                    Column(
-                      spacing: 24,
-                      children: [
-                        TextFormFieldWidget(
-                          hintText: "Name",
-                          prefixIcon: Assets.icons.name.svg(),
-                          controller: nameController,
-                          validator: (value) {
-                            if (value == null || value.trim().isEmpty) {
-                              return "Please enter your name";
-                            }
-                            return null;
-                          },
-                        ),
-                        TextFormFieldWidget(
-                          hintText: "Email",
-                          prefixIcon: Assets.icons.emailIcon.svg(),
-                          controller: emailController,
-                          validator: (value) {
-                            final email = value?.trim() ?? '';
-                            if (email.isEmpty) {
-                              return "Please enter your email";
-                            }
-                            if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
-                                .hasMatch(email)) {
-                              return "Please enter a valid email";
-                            }
-                            return null;
-                          },
-                        ),
-                        TextFormFieldWidget(
-                          hintText: "Password",
-                          isPassword: true,
-                          prefixIcon: Assets.icons.password.svg(),
-                          controller: passwordController,
-                          validator: (value) {
-                            if (value == null || value.length < 6) {
-                              return "Password must be at least 6 characters";
-                            }
-                            return null;
-                          },
-                        ),
-                        TextFormFieldWidget(
-                          hintText: "Confirm Password",
-                          isPassword: true,
-                          prefixIcon: Assets.icons.password.svg(),
-                          controller: confirmPasswordController,
-                          validator: (value) {
-                            if (value != passwordController.text) {
-                              return "Passwords do not match";
-                            }
-                            return null;
-                          },
-                        ),
-                        TextFormFieldWidget(
-                          hintText: "Phone Number",
-                          prefixIcon: Assets.icons.phone.svg(),
-                          controller: phoneController,
-                          validator: (value) {
-                            if (value == null || value.trim().isEmpty) {
-                              return "Please enter your phone number";
-                            }
-                            return null;
-                          },
-                        ),
-                        ButtonWidget(
-                          title: "Create Account",
-                          buttoncolor: AppColors.yellow,
-                          titlecolor: AppColors.black,
-                          onTap: isLoading ? null : () => _submit(context),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 18),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Already Have Account ?", style: theme.bodyMedium),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, AppRouteName.login);
-                          },
-                          child: Text(
-                            " Login",
-                            style: theme.bodyMedium?.copyWith(
-                              color: AppColors.yellow,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 18),
-                    LanguageSelectorWidget(),
-                  ],
+    return BlocProvider(
+        create: (context) => AuthBloc.withDefaultDependencies(),
+        child: Builder(
+          builder: (context) {
+            final userdata = ModalRoute
+                .of(context)
+                ?.settings
+                .arguments as UserEntity?;
+            var theme = Theme
+                .of(context)
+                .textTheme;
+
+
+            return Scaffold(
+              appBar: AppBar(
+                leading: ArrowBackWidget(),
+                title: Text(
+                  "Register",
+                  style: theme.bodyLarge?.copyWith(color: AppColors.yellow),
                 ),
-              );
-            },
-          ),
-        ),
-      ),
+                centerTitle: true,
+              ),
+              body: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: SingleChildScrollView(
+                  child: BlocConsumer<AuthBloc, AuthState>(
+                    listener: (context, state) {
+                      if (state is AuthFailure) {
+                        AppSnackBar.error(state.message);
+                      } else if (state is AuthSuccess) {
+                        AppSnackBar.success("Account created! Please log in.");
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, AppRouteName.login, (route) => false);
+                      }
+                    },
+                    builder: (context, state) {
+                      final isLoading = state is AuthLoading;
+                      return Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            AvatarsCarouselSliderWidget(
+                              onAvatarSelected: (int value) {
+                                setState(() {
+                                  _selectedAvatarIndex = value;
+                                });
+                              },
+                              selectedIndex: _selectedAvatarIndex,),
+                            SizedBox(height: 10),
+                            Center(child: Text("Avatar")),
+                            SizedBox(height: 12),
+                            Column(
+                              spacing: 24,
+                              children: [
+                                TextFormFieldWidget(
+                                  hintText: "Name",
+                                  prefixIcon: Assets.icons.name.svg(),
+                                  controller: nameController,
+                                  validator: (value) {
+                                    if (value == null || value
+                                        .trim()
+                                        .isEmpty) {
+                                      return "Please enter your name";
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                userdata == null ? TextFormFieldWidget(
+                                  hintText: "Email",
+                                  prefixIcon: Assets.icons.emailIcon.svg(),
+                                  controller: emailController,
+                                  validator: (value) {
+                                    final email = value?.trim() ?? '';
+                                    if (email.isEmpty) {
+                                      return "Please enter your email";
+                                    }
+                                    if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
+                                        .hasMatch(email)) {
+                                      return "Please enter a valid email";
+                                    }
+                                    return null;
+                                  },
+                                ) : SizedBox(),
+                                userdata == null ? TextFormFieldWidget(
+                                  hintText: "Password",
+                                  isPassword: true,
+                                  prefixIcon: Assets.icons.password.svg(),
+                                  controller: passwordController,
+                                  validator: (value) {
+                                    if (value == null || value.length < 6) {
+                                      return "Password must be at least 6 characters";
+                                    }
+                                    return null;
+                                  },
+                                ) : SizedBox(),
+                                userdata == null ? TextFormFieldWidget(
+                                  hintText: "Confirm Password",
+                                  isPassword: true,
+                                  prefixIcon: Assets.icons.password.svg(),
+                                  controller: confirmPasswordController,
+                                  validator: (value) {
+                                    if (value != passwordController.text) {
+                                      return "Passwords do not match";
+                                    }
+                                    return null;
+                                  },
+                                ) : SizedBox(),
+                                TextFormFieldWidget(
+                                  hintText: "Phone Number",
+                                  prefixIcon: Assets.icons.phone.svg(),
+                                  controller: phoneController,
+                                  validator: (value) {
+                                    if (value == null || value
+                                        .trim()
+                                        .isEmpty) {
+                                      return "Please enter your phone number";
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                ButtonWidget(
+                                  title: "Create Account",
+                                  buttoncolor: AppColors.yellow,
+                                  titlecolor: AppColors.black,
+                                  onTap: isLoading
+                                      ? null
+                                      : () {
+                                    if (!_formKey.currentState!.validate()) {
+                                      return;
+                                    }
+
+                                    if (userdata != null) {
+                                      context.read<AuthBloc>().add(
+                                        CompleteGoogleRegistrationRequested(
+                                          uid: userdata.uid,
+                                          name: nameController.text.trim(),
+                                          email: userdata.email,
+                                          phone: phoneController.text.trim(),
+                                          avatarIndex: _selectedAvatarIndex,
+                                        ),
+                                      );
+                                      Navigator.pushNamedAndRemoveUntil(
+                                          context, AppRouteName.home, (
+                                          route) => false);
+                                    } else {
+                                      _submit(context);
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 18),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Already Have Account ?",
+                                    style: theme.bodyMedium),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, AppRouteName.login);
+                                  },
+                                  child: Text(
+                                    " Login",
+                                    style: theme.bodyMedium?.copyWith(
+                                      color: AppColors.yellow,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 18),
+                            LanguageSelectorWidget(),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            );
+          },
+        )
+
     );
   }
 }

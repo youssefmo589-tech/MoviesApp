@@ -75,4 +75,50 @@ class AuthRepositoriesImp implements AuthRepositories {
         return e.message ?? 'Something went wrong. Please try again.';
     }
   }
+
+
+  @override
+  Future<UserCredential?> signinwithgoogle() async {
+    try {
+      final user = await _dataSource.signinwithgoogle();
+
+      if (user == null) {
+        return null;
+      }
+
+      return user;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+
+  @override
+  Future<UserEntity> completeGoogleRegistration(String uid,
+      String name,
+      String email,
+      String phone,
+      int avatarIndex,) async {
+    try {
+      await FirestoreCloudService.createuser(
+        UserModel(
+          userID: uid,
+          name: name,
+          phone: phone,
+          image: AvatarsCarouselSliderWidget.avatarNames[avatarIndex],
+        ),
+      );
+
+      return UserEntity(
+        uid: uid,
+        email: email,
+        name: name,
+        phone: phone,
+      );
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+
 }

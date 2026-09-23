@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movieapp/modules/auth/domain/use_cases/completeGoogleRegistrationUsecase.dart';
+import 'package:movieapp/modules/auth/domain/use_cases/signInWithGoogleUsecase.dart';
 
 import '../../data/data_source/firebase_auth_data_source.dart';
 import '../../data/repositories_imp/auth_repositories_imp.dart';
@@ -13,18 +15,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUseCase _loginUseCase;
   final RegisterUseCase _registerUseCase;
   final ForgetPasswordUseCase _forgetPasswordUseCase;
+  final SignInWithGoogleUseCase _signInWithGoogleUseCase;
 
+  final CompleteGoogleRegistrationUseCase _completeGoogleRegistrationUseCase;
   AuthBloc({
     required LoginUseCase loginUseCase,
     required RegisterUseCase registerUseCase,
     required ForgetPasswordUseCase forgetPasswordUseCase,
-  })  : _loginUseCase = loginUseCase,
+    required SignInWithGoogleUseCase signInWithGoogleUseCase,
+    required CompleteGoogleRegistrationUseCase completeGoogleRegistrationUseCase,
+  })
+      : _signInWithGoogleUseCase = signInWithGoogleUseCase,
+        _loginUseCase = loginUseCase,
         _registerUseCase = registerUseCase,
         _forgetPasswordUseCase = forgetPasswordUseCase,
+        _completeGoogleRegistrationUseCase = completeGoogleRegistrationUseCase,
         super(AuthInitial()) {
     on<LoginRequested>(_onLoginRequested);
     on<RegisterRequested>(_onRegisterRequested);
     on<ForgetPasswordRequested>(_onForgetPasswordRequested);
+    on<SignInWithGoogleEvent>(_onSignInWithGoogleEvent);
+    on<CompleteGoogleRegistrationRequested>(
+        _oncompleteGoogleRegistrationRequested);
   }
 
   factory AuthBloc.withDefaultDependencies() {
@@ -34,6 +46,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       loginUseCase: LoginUseCase(repository),
       registerUseCase: RegisterUseCase(repository),
       forgetPasswordUseCase: ForgetPasswordUseCase(repository),
+      signInWithGoogleUseCase: SignInWithGoogleUseCase(repository),
+      completeGoogleRegistrationUseCase: CompleteGoogleRegistrationUseCase(
+          repository),
     );
   }
 
@@ -45,6 +60,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthSuccess(user));
     } catch (e) {
       emit(AuthFailure(_cleanMessage(e)));
+    }
+  }
+
+  Future<void> _oncompleteGoogleRegistrationRequested(
+      CompleteGoogleRegistrationRequested event, Emitter<AuthState> emit) async
+  {
+    emit(AuthLoading());
+    try {
+      final user = await _completeGoogleRegistrationUseCase(
+          event.uid, event.name, event.email, event.phone, event.avatarIndex);
+      emit(AuthSuccess(user));
+    } catch (error) {
+      emit(AuthFailure(_cleanMessage(error)));
     }
   }
 
@@ -72,6 +100,35 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await _forgetPasswordUseCase(event.email);
       emit(ForgetPasswordEmailSent(event.email));
     } catch (e) {
+      emit(AuthFailure(_cleanMessage(e)));
+    }
+  }
+
+  Future<void> _onSignInWithGoogleEvent(SignInWithGoogleEvent event,
+      Emitter<AuthState> emit,) async {
+    emit(AuthLoading());
+
+    try {
+      final result = await _signInWithGoogleUseCase();
+
+      if (result == null) {
+        emit(AuthFailure("Google sign in cancelled"));
+        return;
+      }
+
+      final isNewUser =
+          result.additionalUserInfo?.isNewUser ?? false;
+
+      print("GOOGLE UID: ${result.user?.uid}");
+      print("IS NEW USER: $isNewUser");
+
+      if (isNewUser) {
+        emit(AuthNewGoogleUser(result));
+      } else {
+        emit(AuthSuccessSignInWithGoogle("Login Success"));
+      }
+    } catch (e) {
+      print("GOOGLE BLOC ERROR: $e");
       emit(AuthFailure(_cleanMessage(e)));
     }
   }

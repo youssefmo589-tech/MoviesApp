@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'auth_data_source_interface.dart';
 
@@ -49,4 +50,27 @@ class FirebaseAuthDataSource implements AuthDataSourceInterface {
 
   @override
   User? get currentUser => _firebaseAuth.currentUser;
+
+  @override
+  Future<UserCredential?> signinwithgoogle() async {
+    await GoogleSignIn().signOut();
+
+    final GoogleSignInAccount? googleuser = await GoogleSignIn().signIn();
+
+    if (googleuser == null) {
+      return null;
+    }
+
+    final GoogleSignInAuthentication googleauth =
+        await googleuser.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleauth.accessToken,
+      idToken: googleauth.idToken,
+    );
+
+    final result = await FirebaseAuth.instance.signInWithCredential(credential);
+
+    return result;
+  }
 }

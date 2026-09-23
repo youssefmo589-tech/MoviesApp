@@ -83,7 +83,9 @@ class _ProfileTabState extends State<ProfileTab> with SingleTickerProviderStateM
                           CircleAvatar(
                             radius: 40,
                             backgroundColor: Colors.transparent,
-                            backgroundImage: AssetImage(imageController.text),
+                            backgroundImage: imageController.text.isNotEmpty
+                                ? AssetImage(imageController.text)
+                                : null,
                           ),
                           const SizedBox(height: 15),
                           Text(

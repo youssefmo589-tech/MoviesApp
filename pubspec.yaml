@@ -11,6 +11,9 @@ environment:
 
 
 dependencies:
+
+  google_sign_in: ^6.3.0
+
   flutter:
     sdk: flutter
 

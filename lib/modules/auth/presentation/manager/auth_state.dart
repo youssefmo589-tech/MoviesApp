@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../domain/entity/user_entity.dart';
 
@@ -12,6 +13,22 @@ abstract class AuthState extends Equatable {
 class AuthInitial extends AuthState {}
 
 class AuthLoading extends AuthState {}
+
+class AuthSuccessSignInWithGoogle extends AuthState {
+  final String message;
+
+  AuthSuccessSignInWithGoogle(this.message);
+
+  List<Object?> get props => [message];
+}
+
+class AuthNewGoogleUser extends AuthState {
+  UserCredential credential;
+
+  AuthNewGoogleUser(this.credential);
+
+  List<Object?> get props => [credential];
+}
 
 class AuthSuccess extends AuthState {
   final UserEntity user;

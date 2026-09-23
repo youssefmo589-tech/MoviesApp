@@ -82,12 +82,10 @@ abstract class AppConfig {
 
       case AppRouteName.register:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider<AuthBloc>(
-            create: (BuildContext context) =>
-                AuthBloc.withDefaultDependencies(),
-            child: RegisterScreen(),
-          ),
+          builder: (context) =>
+              RegisterScreen(),
         );
+
 
       default:
         return null;

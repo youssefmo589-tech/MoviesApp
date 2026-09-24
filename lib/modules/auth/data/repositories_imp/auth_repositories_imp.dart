@@ -106,6 +106,7 @@ class AuthRepositoriesImp implements AuthRepositories {
           name: name,
           phone: phone,
           image: AvatarsCarouselSliderWidget.avatarNames[avatarIndex],
+        //////
         ),
       );
 

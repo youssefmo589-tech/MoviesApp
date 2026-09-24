@@ -23,7 +23,6 @@ import 'app_route_name.dart';
 abstract class AppConfig {
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-
       case AppRouteName.initial:
         return MaterialPageRoute(builder: (context) => SplashScreen());
 
@@ -54,14 +53,6 @@ abstract class AppConfig {
           ),
         );
 
-      case AppRouteName.profile:
-        return MaterialPageRoute(
-          builder: (context) => BlocProvider<ProfileBloc>(
-            create: (context) => ProfileBloc(localDataSource: ProfileLocalDataSourceImpl()),
-            child: ProfileTab(),
-          ),
-        );
-
       case AppRouteName.login:
         return MaterialPageRoute(
           builder: (context) => BlocProvider<AuthBloc>(
@@ -81,11 +72,7 @@ abstract class AppConfig {
         );
 
       case AppRouteName.register:
-        return MaterialPageRoute(
-          builder: (context) =>
-              RegisterScreen(),
-        );
-
+        return MaterialPageRoute(builder: (context) => RegisterScreen());
 
       default:
         return null;

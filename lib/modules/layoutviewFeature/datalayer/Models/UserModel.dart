@@ -8,6 +8,7 @@ class UserModel extends UserEntity {
     required super.phone,
     required super.image,
     super.userID,
+    super.favoriteMovies,
   });
 
   factory UserModel.fromjson(Map<String, dynamic> json) {
@@ -16,10 +17,17 @@ class UserModel extends UserEntity {
       name: json['name'],
       phone: json['phone'],
       image: json['image'],
+      favoriteMovies: List<String>.from(json['favoriteMovies']),
     );
   }
 
   Map<String, dynamic> tofirestore() {
-    return {"name": name, "phone": phone, "image": image, "userID": userID};
+    return {
+      "name": name,
+      "phone": phone,
+      "image": image,
+      "userID": userID,
+      "favoriteMovies": favoriteMovies,
+    };
   }
 }

@@ -13,3 +13,8 @@ class MovieSimilarEvent extends MovieDetailsEvent {
 
   MovieSimilarEvent({required this.id});
 }
+
+class MovieFavoriteEvent extends MovieDetailsEvent {
+  final int id;
+  MovieFavoriteEvent({required this.id});
+}

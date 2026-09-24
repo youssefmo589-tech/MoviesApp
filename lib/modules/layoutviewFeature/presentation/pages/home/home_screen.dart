@@ -9,6 +9,9 @@ import 'package:movieapp/modules/layoutviewFeature/presentation/pages/home/prese
 import 'package:movieapp/modules/layoutviewFeature/presentation/pages/home/presentation/tabs/search_tab/search_tab.dart';
 import 'package:movieapp/modules/layoutviewFeature/datalayer/datasources/profile_local_data_source.dart';
 
+import '../../../../movie_details_feature/data/data_source/movie_details_data_source.dart';
+import '../../../../movie_details_feature/data/repository_imp/movie_details_repo_imp.dart';
+import '../../../../movie_details_feature/domain/use_cases/get_movie_details_use_case.dart';
 import '../../manager/home_bloc.dart';
 import '../../manager/profile_bloc.dart';
 import '../profile/presentation/home_tab.dart';
@@ -32,9 +35,11 @@ class HomeScreen extends StatelessWidget {
         BlocProvider<ProfileBloc>(
           create: (context) => ProfileBloc(
             localDataSource: ProfileLocalDataSourceImpl(),
+            getMovieDetailsUseCase: GetMovieDetailsUseCase(
+              MovieDetailsRepoImp(MovieDetailsDataSource()),
+            ),
           ),
-        ),
-      ],
+        ),      ],
       child: const MainLayoutView(),
     );
   }
@@ -112,7 +117,7 @@ class MainLayoutViewState extends State<MainLayoutView> {
     final iconSize = (clampedHeight * 0.38).clamp(20.0, 28.0);
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.black,
       body: _tabs[_selectedTabIndex],
       bottomNavigationBar: Container(
         margin: EdgeInsets.only(

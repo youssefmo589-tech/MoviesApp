@@ -10,6 +10,7 @@ import '../../../../core/app_routes/app_route_name.dart';
 import '../../../../core/app_theme_manager/app_colors.dart';
 import '../../../../core/gen/assets.gen.dart';
 import '../../../../widgets/MovieDetailsContainer.dart';
+import '../../../../widgets/favorites_icon_widget.dart';
 import '../../../../widgets/movie_details_widget.dart';
 import '../manager/movie_details_bloc.dart';
 import '../manager/movie_details_event.dart';
@@ -132,6 +133,20 @@ class _MovieDetailsState extends State<MovieDetails> {
                                   ),
                                 ),
                               ],
+                            ),
+                          ),
+                          Positioned(
+                            top: 0,
+                            right: 8,
+                            child: SafeArea(
+                              child: FavoritesIconWidget(
+                                isFavorite: state.isFavorite,
+                                onTap: () {
+                                  context.read<MovieDetailsBloc>().add(
+                                    MovieFavoriteEvent(id: movie.id),
+                                  );
+                                },
+                              ),
                             ),
                           ),
                         ],

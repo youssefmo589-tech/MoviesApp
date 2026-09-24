@@ -14,6 +14,11 @@ class AddToHistoryEvent extends ProfileEvent {
   AddToHistoryEvent(this.movie);
 }
 
+class LoadFavoritesEvent extends ProfileEvent {
+final List<String> favoritesId;
+  LoadFavoritesEvent({required this.favoritesId});
+}
+
 class EditnameEvent extends ProfileEvent {
   final String name;
   EditnameEvent({required this.name});

@@ -9,10 +9,11 @@ class MovieLoading extends MovieDetailsState {}
 
 class MovieSuccess extends MovieDetailsState {
  final MovieDetailsEntity movieDetails;
+  final bool isFavorite;
 
   List<MovieDetailsEntity> similarmovies;
 
-  MovieSuccess({required this.movieDetails, required this.similarmovies});
+  MovieSuccess({required this.movieDetails, required this.similarmovies, required this.isFavorite});
 }
 
 class MovieError extends MovieDetailsState {

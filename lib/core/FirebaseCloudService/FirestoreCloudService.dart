@@ -46,7 +46,6 @@ class FirestoreCloudService {
       await docRef.delete();
       await FirebaseAuth.instance.currentUser?.delete();
 
-
       return true;
     } catch (error) {
       return false;
@@ -68,6 +67,57 @@ class FirestoreCloudService {
       }
     } catch (error) {
       return null;
+    }
+  }
+
+  static Future<bool> addFavoriteMovie(String movieID) async {
+    try {
+      final userID = FirebaseAuth.instance.currentUser?.uid;
+      final collectionRef = getcollection();
+
+      final docRef = collectionRef.doc(userID);
+
+      await docRef.update({
+        'favoriteMovies': FieldValue.arrayUnion([movieID]),
+      });
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  static Future<bool> removeFavoriteMovie(String movieID) async {
+    try {
+      final userID = FirebaseAuth.instance.currentUser?.uid;
+      final collectionRef = getcollection();
+
+      final docRef = collectionRef.doc(userID);
+
+      await docRef.update({
+        'favoriteMovies': FieldValue.arrayRemove([movieID]),
+      });
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  static Future<List<String>> getFavoriteMovies() async {
+    try {
+      final userID = FirebaseAuth.instance.currentUser?.uid;
+      final collectionRef = getcollection();
+
+      final docRef = collectionRef.doc(userID);
+
+      final doc = await docRef.get();
+      final data = doc.data();
+      if (data == null){
+        return [];
+      }
+
+      return data.favoriteMovies;
+    } catch (error) {
+      return [];
     }
   }
 }

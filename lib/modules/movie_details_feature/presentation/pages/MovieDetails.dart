@@ -11,6 +11,11 @@ import '../../../../core/app_theme_manager/app_colors.dart';
 import '../../../../core/gen/assets.gen.dart';
 import '../../../../widgets/MovieDetailsContainer.dart';
 import '../../../../widgets/movie_details_widget.dart';
+
+import '../../../layoutviewFeature/datalayer/Models/movie_model.dart';
+import '../../../layoutviewFeature/presentation/manager/history_bloc.dart';
+import '../../../layoutviewFeature/presentation/manager/history_event.dart';
+
 import '../manager/movie_details_bloc.dart';
 import '../manager/movie_details_event.dart';
 
@@ -36,7 +41,21 @@ class _MovieDetailsState extends State<MovieDetails> {
     final theme = Theme.of(context).textTheme;
 
     return Scaffold(
-      body: BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
+      body: BlocConsumer<MovieDetailsBloc, MovieDetailsState>(
+        listener: (context, state) {
+          if (state is MovieSuccess) {
+            final details = state.movieDetails;
+            final movieModel = MovieModel(
+              id: details.id,
+              title: details.name,
+              mediumCoverImage: details.imageLarge,
+              rating: details.rating,
+            );
+            context.read<HistoryBloc>().add(
+              AddMovieToHistoryEvent(movieModel),
+            );
+          }
+        },
         builder: (BuildContext context, MovieDetailsState state) {
           if (state is MovieLoading || state is MovieInitial) {
             return Center(child: CircularProgressIndicator());
@@ -375,6 +394,7 @@ class _MovieDetailsState extends State<MovieDetails> {
       ),
     );
   }
+
   void _launchURL(String url) async {
     final launch = await launchUrl(Uri.parse(url), mode: LaunchMode.platformDefault);
     if (!launch) {

@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:movieapp/modules/layoutviewFeature/datalayer/models/movie_model.dart';
+import 'package:movieapp/modules/layoutviewFeature/datalayer/models/movie_model.dart' hide MovieModel;
 import 'package:movieapp/modules/layoutviewFeature/presentation/manager/profile_event.dart';
 
 import '../../../../../../../../core/FirebaseCloudService/FirestoreCloudService.dart';
@@ -81,17 +81,11 @@ class _ProfileTabState extends State<ProfileTab>
               );
             }
 
-            List<MovieModel> history = [];
-            List<MovieDetailsEntity> favorites = [];
             List<MovieModel> watchList = [];
-            if (profileState is ProfileLoadedState) {
-              watchList = profileState.watchList.cast<MovieModel>();
+            if (state is ProfileLoadedState) {
+              watchList = state.watchList.cast<MovieModel>();
             }
 
-            if (state is ProfileLoadedState) {
-              history = state.history;
-              favorites = state.favorites;
-            }
             return BlocBuilder<HistoryBloc, HistoryState>(
               builder: (context, historyState) {
                 final bool historyLoading =
@@ -108,189 +102,6 @@ class _ProfileTabState extends State<ProfileTab>
     );
   }
 
-            return NestedScrollView(
-              headerSliverBuilder: (context, innerBoxIsScrolled) {
-                return [
-                  SliverToBoxAdapter(
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 20),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Row(
-                            children: [
-                              Column(
-                                spacing: 15,
-                                children: [
-                                  CircleAvatar(
-                                    radius: 40,
-                                    backgroundColor: Colors.transparent,
-                                    backgroundImage:
-                                        imageController.text.isNotEmpty
-                                        ? AssetImage(imageController.text)
-                                        : null,
-                                  ),
-                                  const SizedBox(height: 15),
-                                  Text(
-                                    nameController.text,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(width: 24),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        _buildStatColumn(
-                                          favorites.length.toString(),
-                                          "Wish List",
-                                        ),
-                                        _buildStatColumn(
-                                          history.length.toString(),
-                                          "History",
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 8),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFFF6BD00),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      AppRouteName.Editprofile,
-                                    );
-                                  },
-                                  child: const Text(
-                                    "Edit Profile",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFFE50914),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 20,
-                                    vertical: 12,
-                                  ),
-                                ),
-                                onPressed: () {
-                                  Navigator.pushReplacementNamed(
-                                    context,
-                                    AppRouteName.login,
-                                  );
-                                },
-                                child: const Row(
-                                  children: [
-                                    Text(
-                                      "Exit ",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Icon(
-                                      Icons.exit_to_app,
-                                      color: Colors.white,
-                                      size: 18,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                      ],
-                    ),
-                  ),
-                  SliverPersistentHeader(
-                    pinned: true,
-                    delegate: _TabBarDelegate(
-                      TabBar(
-                        controller: _tabController,
-                        indicatorSize: TabBarIndicatorSize.tab,
-                        indicatorColor: AppColors.yellow,
-                        labelColor: AppColors.white,
-                        unselectedLabelColor: AppColors.white,
-                        labelStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        unselectedLabelStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        tabs: const [
-                          Tab(
-                            icon: Icon(
-                              Icons.format_list_bulleted_rounded,
-                              size: 35,
-                              color: AppColors.yellow,
-                            ),
-                            text: "Watch List",
-                          ),
-                          Tab(
-                            icon: Icon(
-                              Icons.folder_rounded,
-                              size: 35,
-                              color: AppColors.yellow,
-                            ),
-                            text: "History",
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ];
-              },
-              body: TabBarView(
-                controller: _tabController,
-                children: [
-                  _buildFavoritesGridOrEmpty(
-                    favorites,
-                    "No movies in Watch List",
-                  ),
-                  _buildMovieGridOrEmpty(history, "No watch history found"),
-                ],
-              ),
-            );
-          },
-        ),
-      ),
   Widget _buildProfileBody(
       List<MovieModel> watchList,
       List<MovieModel> history,
@@ -401,6 +212,7 @@ class _ProfileTabState extends State<ProfileTab>
             controller: _tabController,
             children: [
               _buildMovieGridOrEmpty(watchList, "No movies in Watch List"),
+              _buildFavoritesGridOrEmpty( ),
               historyLoading
                   ? const Center(
                 child: CircularProgressIndicator(color: Color(0xFFF6BD00)),
@@ -515,9 +327,10 @@ class _ProfileTabState extends State<ProfileTab>
   }
 
   Widget _buildFavoritesGridOrEmpty(
-    List<MovieDetailsEntity> movies,
-    String emptyMessage,
-  ) {
+      List<MovieDetailsEntity> movies,
+      String emptyMessage,
+      )
+  {
     if (movies.isEmpty) {
       return Center(
         child: Column(
@@ -623,10 +436,10 @@ class _TabBarDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
+      BuildContext context,
+      double shrinkOffset,
+      bool overlapsContent,
+      ) {
     return Container(color: AppColors.offBlack, child: tabBar);
   }
 

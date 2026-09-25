@@ -81,9 +81,9 @@ class _ProfileTabState extends State<ProfileTab>
               );
             }
 
-            List<MovieModel> watchList = [];
+            List<MovieDetailsEntity> favorites = [];
             if (state is ProfileLoadedState) {
-              watchList = state.watchList.cast<MovieModel>();
+              favorites = state.favorites;
             }
 
             return BlocBuilder<HistoryBloc, HistoryState>(
@@ -93,7 +93,7 @@ class _ProfileTabState extends State<ProfileTab>
                 final List<MovieModel> history =
                 historyState is HistorySuccessState ? historyState.movies : <MovieModel>[];
 
-                return _buildProfileBody(watchList, history, historyLoading);
+                return _buildProfileBody(favorites, history, historyLoading);
               },
             );
           },
@@ -103,125 +103,140 @@ class _ProfileTabState extends State<ProfileTab>
   }
 
   Widget _buildProfileBody(
-      List<MovieModel> watchList,
+      List<MovieDetailsEntity> favorites,
       List<MovieModel> history,
       bool historyLoading,
       ) {
-    return Column(
-      children: [
-        const SizedBox(height: 20),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Row(
-            children: [
-              Column(
-                spacing: 15,
-                children: [
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundColor: Colors.transparent,
-                    backgroundImage: AssetImage(imageController.text),
+    return NestedScrollView(
+      headerSliverBuilder: (context, innerBoxIsScrolled) {
+        return [
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    children: [
+                      Column(
+                        spacing: 15,
+                        children: [
+                          CircleAvatar(
+                            radius: 40,
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: AssetImage(imageController.text),
+                          ),
+                          const SizedBox(height: 15),
+                          Text(
+                            nameController.text,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(width: 24),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                _buildStatColumn(favorites.length.toString(), "Wish List"),
+                                _buildStatColumn(history.length.toString(), "History"),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 15),
-                  Text(
-                    nameController.text,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                ),
+                const SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFF6BD00),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, AppRouteName.Editprofile);
+                          },
+                          child: const Text(
+                            "Edit Profile",
+                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFE50914),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        ),
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, AppRouteName.login);
+                        },
+                        child: const Row(
+                          children: [
+                            Text("Exit ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                            Icon(Icons.exit_to_app, color: Colors.white, size: 18),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
+          ),
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: _TabBarDelegate(
+              TabBar(
+                indicatorSize: TabBarIndicatorSize.tab,
+                controller: _tabController,
+                indicatorColor: const Color(0xFFF6BD00),
+                labelColor: AppColors.white,
+                unselectedLabelColor: AppColors.white,
+                labelStyle: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
+                tabs: const [
+                  Tab(icon: Icon(Icons.list_rounded, size: 35, color: AppColors.yellow,), text: "Watch List"),
+                  Tab(icon: Icon(Icons.folder_rounded, size: 35, color: AppColors.yellow,), text: "History"),
                 ],
               ),
-              const SizedBox(width: 24),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        _buildStatColumn(watchList.length.toString(), "Wish List"),
-                        _buildStatColumn(history.length.toString(), "History"),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-        const SizedBox(height: 16),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFF6BD00),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, AppRouteName.Editprofile);
-                  },
-                  child: const Text(
-                    "Edit Profile",
-                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 12),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFE50914),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                ),
-                onPressed: () {
-                  Navigator.pushReplacementNamed(context, AppRouteName.login);
-                },
-                child: const Row(
-                  children: [
-                    Text("Exit ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                    Icon(Icons.exit_to_app, color: Colors.white, size: 18),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 20),
-        TabBar(
-          controller: _tabController,
-          indicatorColor: const Color(0xFFF6BD00),
-          labelColor: const Color(0xFFF6BD00),
-          unselectedLabelColor: Colors.white54,
-          tabs: const [
-            Tab(icon: Icon(Icons.list), text: "Watch List"),
-            Tab(icon: Icon(Icons.folder_open), text: "History"),
-          ],
-        ),
-        Expanded(
-          child: TabBarView(
-            controller: _tabController,
-            children: [
-              _buildMovieGridOrEmpty(watchList, "No movies in Watch List"),
-              _buildFavoritesGridOrEmpty( ),
-              historyLoading
-                  ? const Center(
-                child: CircularProgressIndicator(color: Color(0xFFF6BD00)),
-              )
-                  : _buildMovieGridOrEmpty(history, "No watch history found"),
-            ],
-          ),
-        ),
-      ],
+        ];
+      },
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          _buildFavoritesGridOrEmpty(favorites, "No movies in Watch List"),
+          historyLoading
+              ? const Center(
+            child: CircularProgressIndicator(color: Color(0xFFF6BD00)),
+          )
+              : _buildMovieGridOrEmpty(history, "No watch history found"),
+        ],
+      ),
     );
   }
 
@@ -249,80 +264,111 @@ class _ProfileTabState extends State<ProfileTab>
     );
   }
 
+  Widget _buildMovieCard({
+    required String imageUrl,
+    required String rating,
+    VoidCallback? onTap,
+  })
+  {
+    final card = ClipRRect(
+      borderRadius: BorderRadius.circular(8),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.network(
+            imageUrl,
+            fit: BoxFit.cover,
+            errorBuilder: (_, __, ___) => Container(color: Colors.grey[900]),
+          ),
+          Positioned(
+            top: 6,
+            left: 6,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              decoration: BoxDecoration(
+                color: Colors.black.withValues(alpha: 0.7),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    rating,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                  const SizedBox(width: 2),
+                  const Icon(
+                    Icons.star,
+                    color: Color(0xFFF6BD00),
+                    size: 20,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (onTap == null) return card;
+    return GestureDetector(onTap: onTap, child: card);
+  }
+
+  Widget _buildEmptyState(String emptyMessage) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Lottie.asset(
+            'assets/images/empty_list.json',
+            width: 200,
+            height: 200,
+          ),
+          const SizedBox(height: 12),
+          Text(
+            emptyMessage,
+            style: const TextStyle(color: Colors.grey, fontSize: 16),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildMovieGridOrEmpty(List<MovieModel> movies, String emptyMessage) {
     if (movies.isEmpty) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Lottie.asset(
-              'assets/images/empty_list.json',
-              width: 200,
-              height: 200,
-            ),
-            const SizedBox(height: 12),
-            Text(
-              emptyMessage,
-              style: const TextStyle(color: Colors.grey, fontSize: 16),
-            ),
-          ],
-        ),
-      );
+      return _buildEmptyState(emptyMessage);
     }
 
-    return GridView.builder(
-      padding: const EdgeInsets.all(12),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        childAspectRatio: 0.7,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
+    return Container(
+      color: AppColors.black,
+      child: GridView.builder(
+        padding: const EdgeInsets.all(12),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          childAspectRatio: 0.7,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+        ),
+        itemCount: movies.length,
+        itemBuilder: (context, index) {
+          final movie = movies[index];
+          return _buildMovieCard(
+            imageUrl: movie.mediumCoverImage ?? '',
+            rating: movie.rating?.toStringAsFixed(1) ?? '0.0',
+            onTap: movie.id == null
+                ? null
+                : () {
+              Navigator.pushNamed(
+                context,
+                AppRouteName.MovieDetails,
+                arguments: movie.id,
+              );
+            },
+          );
+        },
       ),
-      itemCount: movies.length,
-      itemBuilder: (context, index) {
-        final movie = movies[index];
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              Image.network(
-                movie.mediumCoverImage ?? '',
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => Container(color: Colors.grey[900]),
-              ),
-              Positioned(
-                top: 6,
-                left: 6,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.7),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.star,
-                        color: Color(0xFFF6BD00),
-                        size: 12,
-                      ),
-                      const SizedBox(width: 2),
-                      Text(
-                        movie.rating?.toString() ?? '0.0',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 
@@ -332,23 +378,7 @@ class _ProfileTabState extends State<ProfileTab>
       )
   {
     if (movies.isEmpty) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Lottie.asset(
-              'assets/images/empty_list.json',
-              width: 200,
-              height: 200,
-            ),
-            const SizedBox(height: 12),
-            Text(
-              emptyMessage,
-              style: const TextStyle(color: Colors.grey, fontSize: 16),
-            ),
-          ],
-        ),
-      );
+      return _buildEmptyState(emptyMessage);
     }
     return Container(
       color: AppColors.black,
@@ -363,7 +393,9 @@ class _ProfileTabState extends State<ProfileTab>
         itemCount: movies.length,
         itemBuilder: (context, index) {
           final movie = movies[index];
-          return GestureDetector(
+          return _buildMovieCard(
+            imageUrl: movie.imageLarge,
+            rating: movie.rating.toStringAsFixed(1),
             onTap: () {
               Navigator.pushNamed(
                 context,
@@ -371,52 +403,6 @@ class _ProfileTabState extends State<ProfileTab>
                 arguments: movie.id,
               );
             },
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  Image.network(
-                    movie.imageLarge,
-                    fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) {
-                      return Container(color: Colors.grey[900]);
-                    },
-                  ),
-                  Positioned(
-                    top: 6,
-                    left: 6,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 6,
-                        vertical: 2,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.7),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        children: [
-                          Text(
-                            movie.rating.toString(),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                          const SizedBox(width: 5),
-                          const Icon(
-                            Icons.star,
-                            color: Color(0xFFF6BD00),
-                            size: 16,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
           );
         },
       ),

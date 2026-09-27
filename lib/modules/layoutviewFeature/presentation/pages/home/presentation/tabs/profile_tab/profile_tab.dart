@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:movieapp/modules/layoutviewFeature/presentation/manager/profile_event.dart';
-
 import '../../../../../../../../core/FirebaseCloudService/FirestoreCloudService.dart';
 import '../../../../../../../../core/app_routes/app_route_name.dart';
 import '../../../../../../../../core/app_theme_manager/app_colors.dart';

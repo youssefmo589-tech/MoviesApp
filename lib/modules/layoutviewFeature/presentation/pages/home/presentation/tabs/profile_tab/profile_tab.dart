@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:movieapp/modules/layoutviewFeature/datalayer/models/movie_model.dart' hide MovieModel;
 import 'package:movieapp/modules/layoutviewFeature/presentation/manager/profile_event.dart';
 
 import '../../../../../../../../core/FirebaseCloudService/FirestoreCloudService.dart';
